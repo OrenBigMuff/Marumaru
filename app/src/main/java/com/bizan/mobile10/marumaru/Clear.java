@@ -28,6 +28,9 @@ public class Clear extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
         CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
+        cardView.setTag(1);
+        cardLinear.addView(linearLayout, 1);
+/*
 
         for (int i = 0; i < zanmon; i++) {
             LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -43,7 +46,8 @@ public class Clear extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
             });
+
             cardLinear.addView(linearLayout, i);
-        }
+        }*/
     }
 }
