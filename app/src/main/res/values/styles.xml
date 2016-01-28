@@ -8,17 +8,27 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="button_start">     //スタートボタン
-        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/P1StartButtonTextColor</item>
         <item name="android:background">@drawable/start_button_back_color</item>
     </style>
     <style name="button_answer">     //アンサーボタン
-        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/P2AnswerButtonTextColor</item>
         <item name="android:background">@drawable/answer_button_back_color</item>
     </style>
     <style name="answer_stroke">     //アンサーボタン外枠
         <item name="android:background">@drawable/answer_button_stroke</item>
+    </style>
+    <style name="fontSize_Big">      //テキストサイズ大
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+    <style name="fontSize_Normal">   //テキストサイズ中
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="fontSize_Small">    //テキストサイズ小
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>
