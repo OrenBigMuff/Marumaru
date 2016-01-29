@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseHelper dbHelper;
     private static SQLiteDatabase db;
 
+    private PreferenceC pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 */
 
 
-        //初回起動確認
-        //Preference preference = ;
+        pref = new PreferenceC(this);
+
+
 
         //サウンド設定
-        //sound = new Sound(this, R.id.soundplease!);
-        //sound.setSoundON();
+        sound = new Sound(this, R.raw.sample);
+        sound.setSoundON(pref.readConfig("soundON", true));
+
+
 
     }
 
@@ -76,14 +81,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == startButton){
-            //Intent intent = new Intent(this, QA.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, QA.class);
+            startActivity(intent);
         }
         if (v == volButton) {
             if(sound.isSoundON()){
                 Sound.setSoundON(false);
+                volButton.setBackgroundResource(R.drawable.mute);
+                pref.writeConfig("soundON", false);
             }else{
                 Sound.setSoundON(true);
+                volButton.setBackgroundResource(R.drawable.volume);
+                pref.writeConfig("soundON", true);
             }
             sound.playSE();
         }
