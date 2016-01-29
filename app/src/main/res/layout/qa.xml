@@ -11,7 +11,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp">
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -22,10 +23,10 @@
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:text="New Text"
-                android:id="@+id/textView"
-                android:background="@color/P2AnswerButtonBackColor"
+                android:id="@+id/qaTxv1"
                 android:textSize="20sp"
-                android:gravity="center" />
+                android:gravity="center"
+                style="@style/yellow_back" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/qaSoundBtn"
@@ -34,19 +35,22 @@
                 android:layout_marginBottom="@dimen/fab_margin"
                 android:layout_marginRight="@dimen/fab_margin"
                 app:backgroundTint="@color/P1SoundButtonBackColor"
-                android:src="@drawable/volume_on" />
+                android:layout_gravity="top|right" />
+
         </LinearLayout>
+
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/FrameL2"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_below="@+id/frameL1"
+        android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:layout_above="@+id/FrameL3"
+        android:layout_below="@+id/frameL1">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/imageView"
-                android:background="@color/P1StartButtonBackColor" />
+                style="@style/carrot_back" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -69,24 +73,24 @@
                 android:layout_alignParentTop="false"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentBottom="false"
-                android:textSize="30sp" />
+                android:textSize="35sp" />
         </RelativeLayout>
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/FrameL3"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/FrameL2"
+        android:layout_height="35dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:layout_above="@+id/FrameL4">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/P1StartButtonBackColor">
+            style="@style/carrot_back">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -102,11 +106,11 @@
     <FrameLayout
         android:id="@+id/FrameL4"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@+id/FrameL3"
+        android:layout_height="130dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:layout_above="@+id/FrameL5">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -122,7 +126,8 @@
                 android:layout_gravity="top"
                 android:layout_weight="1"
                 style="@style/button_answer"
-                android:layout_marginRight="2dp" />
+                android:layout_marginRight="4dp"
+                android:textColor="#ff8000" />
 
             <Button
                 android:layout_width="0dp"
@@ -132,7 +137,8 @@
                 android:padding="1dp"
                 android:layout_weight="1"
                 style="@style/button_answer"
-                android:layout_marginLeft="2dp" />
+                android:layout_marginLeft="4dp"
+                android:textColor="#ff8000" />
 
         </LinearLayout>
 
@@ -147,7 +153,7 @@
                 android:id="@+id/qaImgStroke1"
                 style="@style/answer_stroke"
                 android:layout_weight="1"
-                android:layout_marginRight="2dp" />
+                android:layout_marginRight="4dp" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -155,7 +161,7 @@
                 android:id="@+id/qaImgStroke2"
                 style="@style/answer_stroke"
                 android:layout_weight="1"
-                android:layout_marginLeft="2dp" />
+                android:layout_marginLeft="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -165,10 +171,11 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/FrameL5"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:layout_margin="5dp"
-        android:layout_below="@+id/FrameL4">
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -181,8 +188,9 @@
                 android:text="New Button"
                 android:id="@+id/qaBtnAnswer3"
                 android:layout_weight="1"
-                android:layout_marginRight="2dp"
-                style="@style/button_answer"/>
+                android:layout_marginRight="4dp"
+                style="@style/button_answer"
+                android:textColor="#ff8000" />
 
             <Button
                 android:layout_width="0dp"
@@ -190,8 +198,9 @@
                 android:text="New Button"
                 android:id="@+id/qaBtnAnswer4"
                 android:layout_weight="1"
-                android:layout_marginLeft="2dp"
-                style="@style/button_answer"/>
+                android:layout_marginLeft="4dp"
+                style="@style/button_answer"
+                android:textColor="#ff8000" />
         </LinearLayout>
 
         <LinearLayout
@@ -204,7 +213,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/qaImgStroke3"
                 android:layout_weight="1"
-                android:layout_marginRight="2dp"
+                android:layout_marginRight="4dp"
                 style="@style/answer_stroke"/>
 
             <ImageView
@@ -212,14 +221,10 @@
                 android:layout_height="match_parent"
                 android:id="@+id/qaImgStroke4"
                 android:layout_weight="1"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="4dp"
                 style="@style/answer_stroke"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
     </FrameLayout>
 
 </RelativeLayout>

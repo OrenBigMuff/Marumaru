@@ -30,5 +30,11 @@
         <item name="android:textColor">@color/TextColor</item>
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="carrot_back">       //ニンジン色バックグラウンド
+        <item name="android:background">@drawable/color_carrot_background</item>
+    </style>
+    <style name="yellow_back">
+        <item name="android:background">@drawable/color_yellow_background</item>
+    </style>
 
 </resources>
