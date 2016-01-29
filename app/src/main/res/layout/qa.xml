@@ -162,6 +162,11 @@
                 style="@style/answer_stroke"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></LinearLayout>
         </LinearLayout>
 
         <LinearLayout
