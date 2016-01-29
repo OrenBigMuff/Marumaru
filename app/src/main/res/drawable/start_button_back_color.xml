@@ -3,7 +3,7 @@
     <item
         android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="7dp"/>
+            <corners android:radius="10dp"/>
 
             <padding
                 android:top="10dp"
@@ -20,7 +20,7 @@
     <item
         android:state_pressed="false">
         <shape android:shape="rectangle">
-            <corners android:radius="7dp"/>
+            <corners android:radius="10dp"/>
 
             <gradient
                 android:angle="270"
@@ -36,7 +36,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="7dp"/>
+            <corners android:radius="10dp"/>
 
             <gradient
                 android:angle="270"
