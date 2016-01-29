@@ -28,16 +28,15 @@
                 android:gravity="center"
                 style="@style/yellow_back" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/qaSoundBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fab_margin"
-                android:layout_marginRight="@dimen/fab_margin"
-                app:backgroundTint="@color/P1SoundButtonBackColor"
-                android:layout_gravity="top|right" />
-
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/volumeBtn2"
+            android:layout_gravity="right"
+            android:background="@drawable/volume" />
 
     </FrameLayout>
 
@@ -147,32 +146,52 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/qaImgStroke1"
-                style="@style/answer_stroke"
                 android:layout_weight="1"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/qaImgStroke1"
+                    style="@style/answer_stroke"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/qaImgStroke2"
-                style="@style/answer_stroke"
                 android:layout_weight="1"
-                android:layout_marginLeft="4dp" />
+                android:layout_marginLeft="4dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/qaImgStroke2"
+                    style="@style/answer_stroke"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
     </FrameLayout>
 
     <FrameLayout
@@ -213,21 +232,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/qaImgStroke3"
                 android:layout_weight="1"
-                android:layout_marginRight="4dp"
-                style="@style/answer_stroke"/>
+                android:layout_marginRight="4dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/qaImgStroke3"
+                    android:layout_weight="1"
+                    style="@style/answer_stroke"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/qaImgStroke4"
                 android:layout_weight="1"
-                android:layout_marginLeft="4dp"
-                style="@style/answer_stroke"/>
+                android:layout_marginLeft="4dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/qaImgStroke4"
+                    android:layout_weight="1"
+                    style="@style/answer_stroke"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></LinearLayout>
         </LinearLayout>
 
     </FrameLayout>
