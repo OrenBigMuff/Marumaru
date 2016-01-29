@@ -43,34 +43,30 @@ public class QA extends AppCompatActivity implements View.OnClickListener{
             case R.id.qaBtnAnswer1:
                 ImageView qaImgStroke1 = (ImageView) findViewById(R.id.qaImgStroke1);
                 qaImgStroke1.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                 break;
-=======
->>>>>>> origin/Hori
+
 
             case R.id.qaBtnAnswer2:
                 ImageView qaImgStroke2 = (ImageView) findViewById(R.id.qaImgStroke2);
                 qaImgStroke2.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                 break;
-=======
->>>>>>> origin/Hori
+
 
             case R.id.qaBtnAnswer3:
                 ImageView qaImgStroke3 = (ImageView) findViewById(R.id.qaImgStroke3);
                 qaImgStroke3.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                 break;
-=======
->>>>>>> origin/Hori
+
 
             case R.id.qaBtnAnswer4:
                 ImageView qaImgStroke4 = (ImageView) findViewById(R.id.qaImgStroke4);
                 qaImgStroke4.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                 break;
-=======
->>>>>>> origin/Hori
+
         }
     }
 }

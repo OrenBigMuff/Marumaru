@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * データベースの準備
          * this,DB_NAME,DB_VERSION,DB_TABLE,
          */
-/*
+
         String[] dbColTable = {
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         " Question TEXT NOT NULL," +
@@ -49,26 +49,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         " QuestionFlag INTEGER NOT NULL," +
                         " CreateDate TEXT NOT NULL," +
                         " UpdateDate TEXT NOT NULL)"};
-        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
-        db = dbHelper.getWritableDatabase();
-        */
+//        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
+//        db = dbHelper.getWritableDatabase();
+
 /*
         //登録が一軒もなければサンプルを登録バージョンで管理されるべき
         if(!isCheckDBQA()){
             //writeDBStore("eneos");
         }
 */
-
-
         pref = new PreferenceC(this);
 
-
-
         //サウンド設定
-        sound = new Sound(this, R.raw.sample);
+        sound = new Sound(this,R.raw.sample);
         sound.setSoundON(pref.readConfig("soundON", true));
-
-
 
     }
 
@@ -97,4 +91,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sound.playSE();
         }
     }
+
+
+
+//    public String[] getQu(){
+//        return ;
+//    }
 }
