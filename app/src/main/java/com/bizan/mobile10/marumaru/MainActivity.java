@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseHelper dbHelper;
     private static SQLiteDatabase db;
 
+    private PreferenceC pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * データベースの準備
          * this,DB_NAME,DB_VERSION,DB_TABLE,
          */
-/*
+
         String[] dbColTable = {
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         " Question TEXT NOT NULL," +
@@ -47,19 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         " QuestionFlag INTEGER NOT NULL," +
                         " CreateDate TEXT NOT NULL," +
                         " UpdateDate TEXT NOT NULL)"};
-        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
-        db = dbHelper.getWritableDatabase();
-        */
+//        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
+//        db = dbHelper.getWritableDatabase();
+
 /*
         //登録が一軒もなければサンプルを登録バージョンで管理されるべき
         if(!isCheckDBQA()){
             //writeDBStore("eneos");
         }
 */
-
-
-        //初回起動確認
-        //Preference preference = ;
+        pref = new PreferenceC(this);
 
         //サウンド設定
         //sound = new Sound(this, R.id.soundplease!);
@@ -82,10 +81,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == volButton) {
             if(sound.isSoundON()){
                 Sound.setSoundON(false);
+                volButton.setBackgroundResource(R.drawable.mute);
+                pref.writeConfig("soundON", false);
             }else{
                 Sound.setSoundON(true);
+                volButton.setBackgroundResource(R.drawable.volume);
+                pref.writeConfig("soundON", true);
             }
             sound.playSE();
         }
     }
+
+
+
+//    public String[] getQu(){
+//        return ;
+//    }
 }
