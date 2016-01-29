@@ -15,10 +15,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button startButton;
     private Sound sound;
     private Button volButton;
+    private PreferenceC pref;
+
+
     private DatabaseHelper dbHelper;
     private static SQLiteDatabase db;
+    private final String DB_NAME = "gass.db";
+    private final int DB_VERSION = 1;
+    private static final String[] DB_TABLE = {"storetable", "gasstable"};
 
-    private PreferenceC pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         " QuestionFlag INTEGER NOT NULL," +
                         " CreateDate TEXT NOT NULL," +
                         " UpdateDate TEXT NOT NULL)"};
-//        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
-//        db = dbHelper.getWritableDatabase();
+        DatabaseHelper dbHelper = new DatabaseHelper(this, DB_NAME, DB_VERSION, DB_TABLE, dbColTable);
+        db = dbHelper.getWritableDatabase();
 
 /*
         //登録が一軒もなければサンプルを登録バージョンで管理されるべき
