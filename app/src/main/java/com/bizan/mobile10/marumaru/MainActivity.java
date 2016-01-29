@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == startButton){
-            //Intent intent = new Intent(this, QA.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, QA.class);
+            startActivity(intent);
         }
         if (v == volButton) {
             if(sound.isSoundON()){
