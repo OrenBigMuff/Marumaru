@@ -39,18 +39,11 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New CheckBox"
+                android:text="次からこの画面を表示しない"
                 android:id="@+id/checkBox"
                 android:layout_alignParentEnd="false"
                 android:layout_alignParentStart="false"
-                android:layout_alignBottom="@+id/textBox" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="次からこのページを表示しない"
-                android:id="@+id/textView2"
-                android:layout_alignBottom="@+id/textBox" />
+                android:layout_alignParentBottom="true" />
 
 
         </RelativeLayout>
