@@ -27,7 +27,7 @@
             >
 
             <TextView
-                android:id="@+id/txvCcNumber"
+                android:id="@+id/txvCmNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -39,30 +39,30 @@
                 android:layout_marginTop="10dp" />
 
             <TextView
-                android:id="@+id/txvCcQuestion"
+                android:id="@+id/txvCmQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txvCcNumber"
+                android:layout_below="@+id/txvCmNumber"
                 android:text="単語"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="30dp"
-                android:layout_alignLeft="@+id/txvCcNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber" />
 
             <TextView
                 android:id="@+id/txvCmAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txvCcQuestion"
+                android:layout_below="@+id/txvCmQuestion"
                 android:text="意味"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20dp"
-                android:layout_alignLeft="@+id/txvCcNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber" />
 
             <ImageView
                 android:layout_width="60sp"
                 android:layout_height="60sp"
                 android:id="@+id/imvCmRW"
-                android:layout_alignTop="@+id/txvCcQuestion"
+                android:layout_alignTop="@+id/txvCmNumber"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="17dp" />
 
