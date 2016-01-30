@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">3秒で解く〇〇</string>
     <string name="clear_title">Congratulations！</string>
-    <string name="clear_text">\n残り出題数が10題を切りました。\nこのゲームはここでクリアとなります。\n以下が、あなたがクリアできていない\n不得意な単語です。\n\nしっかり勉強して下さいね。</string>
+    <string name="clear_text">残り出題数が10題を切りました。\nこのゲームはここでクリアとなります。\n以下が、あなたがクリアできていない\n不得意な単語です。\nしっかり勉強して下さいね。</string>
 </resources>

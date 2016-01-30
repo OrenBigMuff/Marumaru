@@ -14,10 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Clear extends AppCompatActivity
-implements OnClickListener{
+        implements OnClickListener {
 
     private int zanmon;         //DBから取得した残問題数をセットします。（今井）
-    Button btnInit;             //初期化を実行するメガンテボタン
+
+    TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
+    TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
+    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
+
+    //Buttonを動的にレイアウトする為のゴニョゴニョ
+    private final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
+    private final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +35,6 @@ implements OnClickListener{
         zanmon = 9;
 
 
-        btnInit = (Button)findViewById(R.id.btnInit);
-        btnInit.setOnClickListener(this);
-
-        LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
-        cardLinearZanmon.removeAllViews();
-
-/*
         LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
         LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
         cardLinear.removeAllViews();
@@ -44,25 +44,21 @@ implements OnClickListener{
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
         CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
 
-        cardLinear.addView(linearLayout);
-*/
+        cardLinear.addView(linearLayout, 0);
 
-        Log.v("Clearろぐ","ここまでOK");
-
-  /*      LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
-        CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
-        cardView.setTag(1);
-        cardLinear.addView(linearLayout, 1);*/
+        Log.v("Clearろぐ", "ここまでOK");
 
 
         for (int i = 1; i <= zanmon; i++) {
             LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
-//            LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
-            CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView);
-            TextView zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
-            zanmonTitle.setText("Not Remember " + i);
+            CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
+            zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
+            zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
+            zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
+            zanmonTitle.setText("憶えていない単語 " + i);
+            zanmonWord.setText("Not Remember Words " + i);
+            zanmonMean.setText("Meaning of Words " + i);
             /*cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,21 +68,37 @@ implements OnClickListener{
                 }
             });*/
 
-            cardLinearZanmon.addView(linearLayout2, i-1);
+            cardLinearZanmon.addView(linearLayout2, i - 1);     //i=0からにするために　i-1
         }
+        cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
     }
 
     @Override
     public void onClick(View v) {
-        if(v == btnInit){
-            //ここにイニシャライズの呪文(メソッド)を書き込む
-            Log.v("Button_clr","onClick");
-        }
-        return;
-    }
-
-    public void initApp(){
+        //ここにイニシャライズの呪文(メソッド)を書き込む
+        Log.v("Button_clr", "onClick");
 
     }
+
+    public void initApp() {
+        //イニシャライズ
+    }
+
+    /**
+     * 苦肉の策でボタンを動的に追加する為のメソッドです とりあえずボタンの height = 150dp でご機嫌をうかがってます
+     * @param text
+     * @param tag
+     * @return
+     */
+    private Button makeButton(String text, String tag) {
+        Button button = new Button(this);
+        button.setText(text);
+        button.setTag(tag);
+        button.setOnClickListener(this);
+        button.setLayoutParams(new LinearLayout.LayoutParams(MP, 150));
+        return button;
+    }
+
+    
 
 }
