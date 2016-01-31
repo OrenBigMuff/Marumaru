@@ -64,7 +64,8 @@
                 android:id="@+id/imvCcRW"
                 android:layout_alignTop="@+id/txvCcNumber"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="17dp" />
+                android:layout_marginRight="17dp"
+                android:background="@drawable/marumaru_correct" />
 
             <Button
                 android:id="@+id/btnCcFluke"

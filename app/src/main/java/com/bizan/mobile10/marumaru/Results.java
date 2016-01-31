@@ -69,11 +69,14 @@ public class Results extends AppCompatActivity {
 
                 //マグレボタン
                 Button btnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
+                btnFluke.setTag(i);
                 btnFluke.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(Results.this, "マグレ" + j, Toast.LENGTH_SHORT).show();
-                        correction[j] = 0;
+                        Toast.makeText(Results.this,
+                                "Question" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                                Toast.LENGTH_SHORT).show();
+                        correction[Integer.parseInt(String.valueOf(v.getTag()))] = 0;
                     }
                 });
             }
