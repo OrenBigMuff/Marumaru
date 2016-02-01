@@ -10,30 +10,51 @@ import android.widget.ImageView;
  * Created by user on 2016/01/28.
  */
 public class QA extends AppCompatActivity implements View.OnClickListener{
+
+    private Button button;
+    private ImageView imv;
     @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.qa);
 
         //ボタンをウィジェットに登録
-        Button qaAnsButton1 = (Button) findViewById(R.id.qaBtnAnswer1);
-        qaAnsButton1.setOnClickListener(this);
-        Button qaAnsButton2 = (Button) findViewById(R.id.qaBtnAnswer2);
-        qaAnsButton2.setOnClickListener(this);
-        Button qaAnsButton3 = (Button) findViewById(R.id.qaBtnAnswer3);
-        qaAnsButton3.setOnClickListener(this);
-        Button qaAnsButton4 = (Button) findViewById(R.id.qaBtnAnswer4);
-        qaAnsButton4.setOnClickListener(this);
+        button = (Button) findViewById(R.id.qaBtnAnswer1);
+        button.setOnClickListener(this);
+        button = (Button) findViewById(R.id.qaBtnAnswer2);
+        button.setOnClickListener(this);
+        button = (Button) findViewById(R.id.qaBtnAnswer3);
+        button.setOnClickListener(this);
+        button = (Button) findViewById(R.id.qaBtnAnswer4);
+        button.setOnClickListener(this);
 
         //アンサーボタンの外枠を隠す
-        ImageView qaImgStroke1 = (ImageView) findViewById(R.id.qaImgStroke1);
-        qaImgStroke1.setVisibility(View.GONE);
-        ImageView qaImgStroke2 = (ImageView) findViewById(R.id.qaImgStroke2);
-        qaImgStroke2.setVisibility(View.GONE);
-        ImageView qaImgStroke3 = (ImageView) findViewById(R.id.qaImgStroke3);
-        qaImgStroke3.setVisibility(View.GONE);
-        ImageView qaImgStroke4 = (ImageView) findViewById(R.id.qaImgStroke4);
-        qaImgStroke4.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.qaImgStroke1);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.qaImgStroke2);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.qaImgStroke3);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.qaImgStroke4);
+        imv.setVisibility(View.GONE);
+
+        //○✖画像非表示
+        imv = (ImageView) findViewById(R.id.imgMaru1);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imaMaru2);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgMaru3);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgMaru4);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgBatu1);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgBatu2);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgBatu3);
+        imv.setVisibility(View.GONE);
+        imv = (ImageView) findViewById(R.id.imgBatu4);
+        imv.setVisibility(View.GONE);
     }
 
     @Override
@@ -41,20 +62,20 @@ public class QA extends AppCompatActivity implements View.OnClickListener{
 
         switch (v.getId()){
             case R.id.qaBtnAnswer1:
-                ImageView qaImgStroke1 = (ImageView) findViewById(R.id.qaImgStroke1);
-                qaImgStroke1.setVisibility(View.VISIBLE);
+                imv = (ImageView) findViewById(R.id.qaImgStroke1);
+                imv.setVisibility(View.VISIBLE);
 
             case R.id.qaBtnAnswer2:
-                ImageView qaImgStroke2 = (ImageView) findViewById(R.id.qaImgStroke2);
-                qaImgStroke2.setVisibility(View.VISIBLE);
+                imv = (ImageView) findViewById(R.id.qaImgStroke2);
+                imv.setVisibility(View.VISIBLE);
 
             case R.id.qaBtnAnswer3:
-                ImageView qaImgStroke3 = (ImageView) findViewById(R.id.qaImgStroke3);
-                qaImgStroke3.setVisibility(View.VISIBLE);
+                imv = (ImageView) findViewById(R.id.qaImgStroke3);
+                imv.setVisibility(View.VISIBLE);
 
             case R.id.qaBtnAnswer4:
-                ImageView qaImgStroke4 = (ImageView) findViewById(R.id.qaImgStroke4);
-                qaImgStroke4.setVisibility(View.VISIBLE);
+                imv = (ImageView) findViewById(R.id.qaImgStroke4);
+                imv.setVisibility(View.VISIBLE);
         }
     }
 }
