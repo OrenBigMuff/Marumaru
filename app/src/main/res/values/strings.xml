@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">3秒で解く〇〇</string>
+
     <string name="start_button">スタート</string>
     <string name="anata_seiseki">あなたの成績</string>
     <string name="nokori_mondaisuu">残りの問題数</string>
@@ -8,4 +9,8 @@
     <string name="test">テスト</string>
     <string name="clear_title">Congratulations！</string>
     <string name="clear_text">残り出題数が10題を切りました。\nこのゲームはここでクリアとなります。\n以下、あなたがクリアできていない\n不得意な単語となります。\nしっかり勉強して下さいね。</string>
+
+    <string name="results_title">Results</string>
+    <string name="return_top">TOP画面</string>
+
 </resources>
