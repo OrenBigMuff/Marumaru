@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Results"
+        android:text="@string/results_title"
         android:id="@+id/textView"
         android:layout_weight="6"
         android:textSize="26dp" />
@@ -38,7 +38,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="TOP画面"
+        android:text="@string/return_top"
         android:id="@+id/btnArReturn"
         android:layout_weight="5.5"
         android:layout_gravity="center_horizontal"

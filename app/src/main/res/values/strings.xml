@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">3秒で解く〇〇</string>
+    <string name="results_title">Results</string>
+    <string name="return_top">TOP画面</string>
 </resources>

@@ -2,6 +2,7 @@ package com.bizan.mobile10.marumaru;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ public class Results extends AppCompatActivity {
     private String[] question = {"Question1","Question2","Question3","Question4","Question5",
             "Question6","Question7","Question8","Question9","Question10"};
     private String[] answer = {"意味1","意味2","意味3","意味4","意味5","意味6","意味7","意味8","意味9","意味10"};
-    private int j;
+    private Button btnFluke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class Results extends AppCompatActivity {
         cardLinear.removeAllViews();
 
         for (int i = 0; i < 10; i++) {
-            j = i;
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
             //正解の場合
@@ -68,15 +68,25 @@ public class Results extends AppCompatActivity {
                 cardLinear.addView(linearLayout, i);
 
                 //マグレボタン
-                Button btnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
+                btnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
                 btnFluke.setTag(i);
                 btnFluke.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(Results.this,
-                                "Question" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
-                                Toast.LENGTH_SHORT).show();
-                        correction[Integer.parseInt(String.valueOf(v.getTag()))] = 0;
+                        if (correction[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
+                            Snackbar.make(mParentLayout,
+                                    Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                                    Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(Results.this,
+                                    "Question" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                                    Toast.LENGTH_SHORT).show();
+                            correction[Integer.parseInt(String.valueOf(v.getTag()))] = 0;
+                            btnFluke.setText("出題停止");
+                        }
+                        else if (correction[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
+                            correction[Integer.parseInt(String.valueOf(v.getTag()))] = 1;
+                            btnFluke.setText("マグレ");
+                        }
                     }
                 });
             }
