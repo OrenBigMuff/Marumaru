@@ -1,5 +1,9 @@
 package com.bizan.mobile10.marumaru;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,23 +20,55 @@ import android.widget.Toast;
 public class Clear extends AppCompatActivity
         implements OnClickListener {
 
-    private int zanmon;         //DBから取得した残問題数をセットします。（今井）
+    private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
     TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
     //Buttonを動的にレイアウトする為のゴニョゴニョ
-    private final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
+//    private final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
     private final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
+
+    //仮初めの定数
+    private final static String DB_NAME = "qa.db";
+    private final static String DB_TABLE = "question_answer";
+    private final static int DB_VERSION = 1;
+    //仮初めの定数ここまで
+
+    //仮初めの変数
+    private SQLiteDatabase db;
+    //仮初めの変数ここまで
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
+        //DBオブジェクトの取得
+        DBHelper dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();    //データベースオブジェクト
+
+
         //とりあえず残問数9問で作ってみるね（本番はここでDBから残問を取得してね。）
-        zanmon = 9;
+        numZanmon = 9;
+
+        //DBから残問数を取得するにはこちら
+/*        try {
+            numZanmon = readZanmon();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        //DBから残問数を取得する_ここまで
+
+
+        Zanmon zanmon[] = new Zanmon[numZanmon];
+
+        for(int i=0; i<numZanmon; i++){
+
+        }
+
 
 
         LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
@@ -49,7 +85,7 @@ public class Clear extends AppCompatActivity
         Log.v("Clearろぐ", "ここまでOK");
 
 
-        for (int i = 1; i <= zanmon; i++) {
+        for (int i = 1; i <= numZanmon; i++) {
             LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
             CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
@@ -99,6 +135,57 @@ public class Clear extends AppCompatActivity
         return button;
     }
 
-    
+    private class Zanmon{
+        int tag;
+        String title;
+        String question;
+        String mean;
 
+        Zanmon(int tag, String title, String question, String mean){
+            this.tag = tag;
+            this.title = title;
+            this.question = question;
+            this.mean = mean;
+        }
+    }
+
+    //DBからの読み込みメソッド
+    private String readDB() throws Exception{
+        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
+        if(c.getCount() == 0)throw new Exception();
+        c.moveToFirst();
+        String str = c.getString(1);
+        c.close();
+        return str;
+    }
+
+    private int readZanmon() throws Exception{
+        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
+        if(c.getCount() == 0)throw new Exception();
+        c.moveToFirst();
+        int num_zan = c.getCount();
+        c.close();
+        return num_zan;
+    }
+
+
+    /**
+     * 仮初めのDBHelper
+     */
+    private class DBHelper extends SQLiteOpenHelper{
+        //コンストラクタ
+        public DBHelper(Context context){
+            super(context, DB_NAME, null, DB_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }
 }
