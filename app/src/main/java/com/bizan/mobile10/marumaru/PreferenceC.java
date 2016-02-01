@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
  * String
  * 第二引数として以上5つの型が利用できる。
  *
+ *
  * 書き込み方
  * キーワードと書き込む値を渡してやる
  * pref.writeConfig("keyword", 1);
