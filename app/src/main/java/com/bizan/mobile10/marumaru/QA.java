@@ -34,6 +34,19 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
 
     private AnimatorSet animator;
 
+    private String[] ca;
+
+    String[] qu;
+
+    String[][] ia;
+
+    private Button[] btnQA; //回答ボタン
+
+    private ImageView[] imvStroke   //外枠
+    private ImageView[] imvMaru;    //○✖画像
+    private ImageView[] imvBatu;    //○✖画像
+
+
     //上にあるテキストビューの問題数配列作成
     private String QuestionNo[] = new String[]{"QuestionNo:1","QuestionNo:2",
             "QuestionNo:3","QuestionNo:4","QuestionNo:5","QuestionNo:6",
@@ -54,42 +67,46 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
         setContentView(R.layout.qa);
 
         //ボタンをウィジェットに登録
-        button = (Button) findViewById(R.id.qaBtnAnswer1);
-        button.setOnClickListener(this);
-        button = (Button) findViewById(R.id.qaBtnAnswer2);
-        button.setOnClickListener(this);
-        button = (Button) findViewById(R.id.qaBtnAnswer3);
-        button.setOnClickListener(this);
-        button = (Button) findViewById(R.id.qaBtnAnswer4);
-        button.setOnClickListener(this);
+
+        btnQA = new Button[4];
+        btnQA[0] = (Button) findViewById(R.id.qaBtnAnswer1);
+        btnQA[1] = (Button) findViewById(R.id.qaBtnAnswer2);
+        btnQA[2] = (Button) findViewById(R.id.qaBtnAnswer3);
+        btnQA[3] = (Button) findViewById(R.id.qaBtnAnswer4);
+        for(int i = 0; i < btnQA.length ; i++){
+            btnQA[i].setOnClickListener(this);
+        }
+
 
         //アンサーボタンの外枠を隠す
-        imv = (ImageView) findViewById(R.id.qaImgStroke1);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.qaImgStroke2);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.qaImgStroke3);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.qaImgStroke4);
-        imv.setVisibility(View.GONE);
+        imvStroke = new ImageView[4];
+        imvStroke[0] = (ImageView) findViewById(R.id.qaImgStroke1);
+        imvStroke[1] = (ImageView) findViewById(R.id.qaImgStroke2);
+        imvStroke[2] = (ImageView) findViewById(R.id.qaImgStroke3);
+        imvStroke[3] = (ImageView) findViewById(R.id.qaImgStroke4);
+        for(int i = 0; i < imvStroke.length ; i++){
+            imvStroke[i].setVisibility(View.GONE);
+        }
 
         //○✖画像非表示
-        imv = (ImageView) findViewById(R.id.imgMaru1);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imaMaru2);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgMaru3);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgMaru4);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgBatu1);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgBatu2);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgBatu3);
-        imv.setVisibility(View.GONE);
-        imv = (ImageView) findViewById(R.id.imgBatu4);
-        imv.setVisibility(View.GONE);
+        imvMaru = new ImageView[4];
+        imvMaru[0] = (ImageView) findViewById(R.id.imgMaru1);
+        imvMaru[1] = (ImageView) findViewById(R.id.imaMaru2);
+        imvMaru[2] = (ImageView) findViewById(R.id.imgMaru3);
+        imvMaru[3] = (ImageView) findViewById(R.id.imgMaru4);
+        for(int i = 0; i < imvMaru.length ; i++){
+            imvMaru[i].setVisibility(View.GONE);
+        }
+
+        imvBatu = new ImageView[4];
+        imvBatu[0] = (ImageView) findViewById(R.id.imgBatu1);
+        imvBatu[1] = (ImageView) findViewById(R.id.imgBatu2);
+        imvBatu[2] = (ImageView) findViewById(R.id.imgBatu3);
+        imvBatu[3] = (ImageView) findViewById(R.id.imgBatu4);
+        for(int i = 0; i < imvBatu.length ; i++){
+            imvBatu[i].setVisibility(View.GONE);
+        }
+
 
         //ボリュームボタンウェジェットに登録
         volumeButton = (Button) findViewById(R.id.volumeBtn2);
@@ -104,7 +121,14 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
         //sound = new sound(mSoundId);
         sound.setSoundON(pref.readConfig("soundON", true));
 
+        //正解
         String[] ca = MainActivity.getCorrectAnswer();
+
+        //問題
+        String[] qu = MainActivity.getQuestion();
+        String Question = qu[0];   //問題文
+        //誤答セット
+        String[][] ia = MainActivity.getIncorrectAnswer();
     }
 
     @Override
@@ -123,6 +147,10 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
 
     }
 
+    private void questionStart(){
+        int[] array
+    }
+
     //問題文セット処理
     private void setOuestion(){
 //        //作成したDatabaseHelperクラスに読み取り専用でアクセス
@@ -135,22 +163,8 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
 //        */
 //        String sql = "SELECT Question, Answer1, Answer2, Answer3, Answer4 FROM Question_Answer WHERE _id";
 //
-//        //SQL文実行とカーソルを取得
-//        Cursor c = db.rawQuery(sql, null);
-//        c.moveToFirst();
 
         //データベースから取ってきたデータを変数にセット
-        String Question = c.getString(c.getColumnIndex("Question"));    //問題文
-        String Answer1 = c.getString(c.getColumnIndex("Answer1"));   //４択の選択肢1
-        String Answer2 = c.getString(c.getColumnIndex("Answer2"));   //４択の選択肢2
-        String Answer3 = c.getString(c.getColumnIndex("Answer3"));   //４択の選択肢3
-        String Answer4 = c.getString(c.getColumnIndex("Answer4"));   //４択の選択肢4
-
-        Kotae = c.getString(c.getColumnIndex("CorrectAnswer"));   //答え
-
-        //データベースのクローズ処理
-        c.close();
-        db.close();
 
         ((TextView)findViewById(R.id.questionTxv)).setText(Question);   //問題文をテキストビューに表示
         ((Button)findViewById(R.id.qaBtnAnswer1)).setText(Answer1);     //選択肢をボタンに表示
