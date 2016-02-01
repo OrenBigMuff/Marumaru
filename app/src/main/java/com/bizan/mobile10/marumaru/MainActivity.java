@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    //hhideyyuki
+    //hhideyyuki//
     //ブランチ
     private static final int QNUM = 10;
 

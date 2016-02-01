@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
  * dbC.readDB();
  * などすると使える。
  *
+ *
  * //リセットされます
  * DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
  * dbC.reset();

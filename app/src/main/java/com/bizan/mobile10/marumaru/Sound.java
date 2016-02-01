@@ -14,6 +14,7 @@ import android.media.SoundPool;
  * playSE()で音なる
  * sound.playSE();
  *
+ *
  * アクティビティ閉じるときに入れとくのが望ましい
  * sound.releaseSE();
  */
