@@ -15,9 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
         <activity android:name=".Clear">
         </activity>
+=======
+        <activity android:name=".QA" />
+>>>>>>> e8fe54ea2e12a784f8ea28a3c91712d482b09eae
     </application>
 
 </manifest>
