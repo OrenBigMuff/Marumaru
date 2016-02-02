@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         //問題セット10問未満ならクリア画面を表示する
         if (!qset()) {
-            Intent intent = new Intent(this, QA.class);
+            Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
         }
         //boolean a = dbC.updateQuestionFlag(2, 1);

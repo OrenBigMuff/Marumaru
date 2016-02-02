@@ -25,7 +25,7 @@ public class Results extends AppCompatActivity {
     private String[] mAnswer = mainActivity.getCorrectAnswer();
 
     private Button mBtnFluke;
-    private final LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class Results extends AppCompatActivity {
                     public void onClick(View v) {
                         if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
                             //スナックバーを表示させる
+                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
                             Snackbar.make(mLinearLayout,
                                     "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
                                     Snackbar.LENGTH_SHORT).show();
@@ -89,6 +90,7 @@ public class Results extends AppCompatActivity {
                         }
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
                             //スナックバーを表示させる
+                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
                             Snackbar.make(mLinearLayout,
                                     "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
                                     Snackbar.LENGTH_SHORT).show();
