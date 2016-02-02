@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         this.dbColTable = new String[dbColTable.length];
         this.db_table = new String[db_table.length];
+
         for(int i = 0; i < dbColTable.length; i++){
             this.db_table[i] = db_table[i];
             this.dbColTable[i] = dbColTable[i];
