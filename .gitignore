@@ -6,3 +6,7 @@
 .DS_Store
 /build
 /captures
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.gitignore.rej
+.gitignore

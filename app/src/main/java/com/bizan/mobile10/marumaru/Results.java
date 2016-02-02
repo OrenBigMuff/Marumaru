@@ -10,19 +10,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by kei on 2016/01/28.
  */
 public class Results extends AppCompatActivity {
 
-    private int[] id = {1,2,3,4,5,6,7,8,9,10};
-    private int[] correction = {1,0,0,1,0,1,1,1,0,0};
-    private String[] question = {"Question1","Question2","Question3","Question4","Question5",
-            "Question6","Question7","Question8","Question9","Question10"};
-    private String[] answer = {"意味1","意味2","意味3","意味4","意味5","意味6","意味7","意味8","意味9","意味10"};
-    private Button btnFluke;
+    private static MainActivity mainActivity = new MainActivity();
+
+
+    private int[] mId = mainActivity.getId();
+    private int[] mCorrection = {1,0,0,1,0,1,1,1,0,0};
+    private String[] mQuestion = mainActivity.getQuestion();
+    private String[] mAnswer = mainActivity.getCorrectAnswer();
+
+    private Button mBtnFluke;
+    private final LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class Results extends AppCompatActivity {
         //10問中の正解数を表示させる
         int correct = 0;
         for (int i = 0; i < 10; i++) {
-            if (correction[i]==1) {
+            if (mCorrection[i]==1) {
                 correct++;
             }
         }
@@ -47,69 +50,77 @@ public class Results extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
             //正解の場合
-            if (correction[i]==1) {
+            if (mCorrection[i]==1) {
                 LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_correct, null);
 
                 CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCcCard);
 
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCcNumber);
-                txvNumber.setText("問題 " + (i+1));
+                txvNumber.setText("QuestionNo:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCcQuestion);
-                txvQuestion.setText(question[i]);
+                txvQuestion.setText(mQuestion[i]);
 
                 //意味
                 TextView txvAnswer = (TextView) linearLayout.findViewById(R.id.txvCcAnswer);
-                txvAnswer.setText(answer[i]);
+                txvAnswer.setText(mAnswer[i]);
 
-                cardView.setTag(i);
                 cardLinear.addView(linearLayout, i);
 
                 //マグレボタン
-                btnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
-                btnFluke.setTag(i);
-                btnFluke.setOnClickListener(new View.OnClickListener() {
+                mBtnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
+                mBtnFluke.setTag(i);
+                mBtnFluke.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (correction[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
-                            Snackbar.make(mParentLayout,
-                                    Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                        if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
+                            //スナックバーを表示させる
+                            Snackbar.make(mLinearLayout,
+                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
                                     Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(Results.this,
-                                    "Question" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
-                                    Toast.LENGTH_SHORT).show();
-                            correction[Integer.parseInt(String.valueOf(v.getTag()))] = 0;
-                            btnFluke.setText("出題停止");
+
+                            //出題フラグを｢出題する｣へ
+                            mCorrection[Integer.parseInt(String.valueOf(v.getTag()))] = 0;
+
+                            //ボタンのテキストを｢出題停止｣へ変更
+                            mBtnFluke.setText(R.string.questionstop_button);
                         }
-                        else if (correction[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
-                            correction[Integer.parseInt(String.valueOf(v.getTag()))] = 1;
-                            btnFluke.setText("マグレ");
+                        else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
+                            //スナックバーを表示させる
+                            Snackbar.make(mLinearLayout,
+                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
+                                    Snackbar.LENGTH_SHORT).show();
+
+                            //出題フラグを｢出題しない｣へ
+                            mCorrection[Integer.parseInt(String.valueOf(v.getTag()))] = 1;
+
+                            //ボタンのテキストを｢マグレ｣へ
+                            mBtnFluke.setText(R.string.magure_button);
                         }
                     }
                 });
             }
 
             //不正解の場合
-            else if (correction[i]==0) {
+            else if (mCorrection[i]==0) {
                 LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_mistake, null);
 
                 CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCmCard);
 
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCmNumber);
-                txvNumber.setText("問題 " + (i+1));
+                txvNumber.setText("QuestionNo:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCmQuestion);
-                txvQuestion.setText(question[i]);
+                txvQuestion.setText(mQuestion[i]);
 
                 //意味
                 TextView txvAnswer = (TextView) linearLayout.findViewById(R.id.txvCmAnswer);
-                txvAnswer.setText(answer[i]);
+                txvAnswer.setText(mAnswer[i]);
 
-                cardView.setTag(i);
                 cardLinear.addView(linearLayout, i);
             }
         }
@@ -129,10 +140,8 @@ public class Results extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        String result = "";
-        for (int i = 0; i < 10; i++) {
-            result = result + correction[i] +", ";
-        }
-        Toast.makeText(this,result,Toast.LENGTH_LONG).show();
+        //Databaseへ出題フラグの登録
+        DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
+        dbC.updateQuestionFlag(mId, mCorrection);
     }
 }

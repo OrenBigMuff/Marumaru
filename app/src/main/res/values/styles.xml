@@ -36,5 +36,7 @@
     <style name="yellow_back">
         <item name="android:background">@drawable/color_yellow_background</item>
     </style>
-
+    <style name="CardViewStyle" parent="CardView">
+        <item name="cardBackgroundColor">@color/P2AnswerButtonBackColor</item>
+    </style>
 </resources>
