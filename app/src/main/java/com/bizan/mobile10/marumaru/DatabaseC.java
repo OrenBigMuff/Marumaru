@@ -164,6 +164,7 @@ public class DatabaseC {
     }
 
     /**
+     * 成績をデータベースに反映させる
      * @param id
      * @param flag
      * @return boolean 成功true　失敗false
@@ -196,6 +197,10 @@ public class DatabaseC {
         return tORf;
     }
 
+    /**
+     * 初期状態に戻すが、アップデート日時は今日に変更される
+     * @return 成功：true失敗：false
+     */
     public boolean reset() {
         try {
             db.beginTransaction();
@@ -212,6 +217,10 @@ public class DatabaseC {
         }
     }
 
+    /**
+     * 本日の日付
+     * @return
+     */
     private String getDate() {
         String today = "";
         Calendar cale = Calendar.getInstance();
@@ -219,6 +228,11 @@ public class DatabaseC {
         return today;
     }
 
+    /**
+     * 日付のフォーマット
+     * @param longNum
+     * @return
+     */
     private String longToStringYDM(long longNum) {
         String str = "";
         SimpleDateFormat sdf = new SimpleDateFormat("y/M/d");
