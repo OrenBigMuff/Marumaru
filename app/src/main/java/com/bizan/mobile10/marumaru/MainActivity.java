@@ -7,31 +7,36 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //hhideyyuki//
     //ブランチ
-    private static final int QNUM = 10;
+    private static final int QNUM = 10;     //1サイクルの出題数
 
-    private Button startButton;
-    private Sound sound;
-    private Button volButton;
-    private PreferenceC pref;
+    private Button startButton;             //スタートボタン
+    private Button volButton;               //サウンドボタン
+    private Sound sound;                    //サウンド
 
-    private DatabaseC dbC;
+    //レイアウト
+    private TextView txvmazanmon;
+    private TextView txvmatotal;
+    private TextView txvmakuriado;
 
-    private final String DB_NAME = "QA.db";
-    private final int DB_VERSION = 1;
+    private PreferenceC pref;               //プリファレンス
 
+    private DatabaseC dbC;                  //データベースコントローラー
+
+    private final String DB_NAME = "QA.db"; //データベース名
+    private final int DB_VERSION = 1;       //データベースのバージョン
+    //テーブル名
     private static final String[] DB_TABLE = {"Question_Answer"};
-
     public static String getDB_TABLE() {
         return DB_TABLE[0];
     }
 
-    private static DatabaseHelper dbHelper;
-
+    private static DatabaseHelper dbHelper; //DBヘルパー
     public static DatabaseHelper getDbHelper() {
         return dbHelper;
     }
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 正解
      * Stirng[] str = ManiActivity.getCorrectAnswer();
+     *
      * @return String[]={ジャバ,アンドロイド,ピーエイチピー,,,}
      */
     public static String[] getCorrectAnswer() {
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pref = new PreferenceC(this);
 
         //サウンド設定
-        sound = new Sound(this, R.raw.sample);
+        sound = new Sound(this, R.raw.see);
         sound.setSoundON(pref.readConfig("soundON", true));
 
         //初回起動であればここでCommentary
@@ -133,8 +139,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            startActivity(intent);
 //        }
 
+        txvmazanmon = (TextView) findViewById(R.id.txvmazanmon);
+        txvmatotal = (TextView) findViewById(R.id.txvmatotal);
+        txvmakuriado = (TextView) findViewById(R.id.txvmakuriado);
+
+        float countallrow = dbC.countAllRow();
+        float countzanmon = dbC.countZanmon();
+        txvmatotal.setText(String.valueOf(countallrow));
+        txvmazanmon.setText(String.valueOf(countzanmon));
+        double temp = (countzanmon / countallrow) * 100;
+        String stemp = String.valueOf(temp);
+        stemp = stemp.substring(0, 5);
+        txvmakuriado.setText(stemp);
         long endTime = System.currentTimeMillis();
-        Log.e("time", (endTime - startTime)+"");
+        Log.e("time", (endTime - startTime) + "");
+
+
     }
 
     @Override
@@ -145,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, QA.class);
             startActivity(intent);
         }
-
         //boolean a = dbC.updateQuestionFlag(2, 1);
         //dbC.reset();
         Log.e("countAllRow", dbC.countAllRow() + "@" + dbC.countZanmon());
@@ -168,17 +187,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == volButton) {
             if (sound.isSoundON()) {
                 Sound.setSoundON(false);
-                volButton.setBackgroundResource(R.drawable.mute);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                 pref.writeConfig("soundON", false);
             } else {
                 Sound.setSoundON(true);
-                volButton.setBackgroundResource(R.drawable.volume);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                 pref.writeConfig("soundON", true);
             }
             sound.playSE();
         }
     }
 
+    /**
+     * 問題をデータベースからランダムでとってきて各種配列に格納
+     * @return
+     */
     private boolean qset() {
         Cursor cursor = dbC.qset(String.valueOf(QNUM));
         int i = 0;
@@ -200,9 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        //sound.releaseSE();
+        sound.releaseSE();
         dbC.closeDB();
     }
 }

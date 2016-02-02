@@ -1,14 +1,18 @@
 package com.bizan.mobile10.marumaru;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -18,75 +22,81 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.Arrays;
+
 /**
  * Created by user on 2016/01/28.
  */
-public class QA extends AppCompatActivity implements View.OnClickListener,Animation.AnimationListener{
+public class QA extends AppCompatActivity implements View.OnClickListener, Animator.AnimatorListener {
+    private int count = 0;                  //現在の問題
+    private static final int COUNT_Q = 10;  //1サイクルの問題数
 
-    private Button button;
-    private ImageView imv;
-    private Sound sound;
+    private PreferenceC pref;               //プリファレンス利用のためのクラス
+
+    private String[] correct;               //正解の配列を入れる
+    private String[] question;              //問題の配列を入れる
+    private String[][] incorrect;           //選択肢配列を入れる
+
+    public static int[] getCorrection() {   //次ページ用の配列とそのゲッター
+        return correction;
+    }
+    private static int[] correction = new int[COUNT_Q];
+    private int correctionF = 0;            //正解不正解のフラッグ
+
+    //レイアウト
     private Button volumeButton;
-
-    private PreferenceC pref;
-
-    private LinearLayout animeL;
-
-    private AnimatorSet animator;
-
-    private String[] ca;
-
-    String[] qu;
-
-    String[][] ia;
-
-    private Button[] btnQA; //回答ボタン
-
-    private ImageView[] imvStroke   //外枠
+    private Button[] btnQA;         //回答ボタン
+    private ImageView[] imvStroke;  //外枠
     private ImageView[] imvMaru;    //○✖画像
     private ImageView[] imvBatu;    //○✖画像
 
+    private TextView qaTextViwe;
+    private TextView questionTextView;
 
     //上にあるテキストビューの問題数配列作成
-    private String QuestionNo[] = new String[]{"QuestionNo:1","QuestionNo:2",
-            "QuestionNo:3","QuestionNo:4","QuestionNo:5","QuestionNo:6",
-            "QuestionNo:7","QuestionNo:9","QuestionNo:9","QuestionNo:10"};
+    private String QuestionNo[] = new String[]{"QuestionNo:1", "QuestionNo:2",
+            "QuestionNo:3", "QuestionNo:4", "QuestionNo:5", "QuestionNo:6",
+            "QuestionNo:7", "QuestionNo:8", "QuestionNo:9", "QuestionNo:10"};
 
-    private String Kotae;
+    //サウンドリソース
+    private Sound soundSeikai;
+    private Sound soundHazure;
 
-    //SoundPool(効果音再生)
-    private SoundPool mSoundPool;
-    private int[] mSoundId = new int[2];    //２つ分
+    //アニメーション
+    private LinearLayout animeL;
+    private AnimatorSet animatorSet;
+    private Handler handler;
 
     @Override
-    public void onCreate(Bundle bundle){
+    public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         //タイトルバー非表示
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.qa);
 
-        //ボタンをウィジェットに登録
+        qaTextViwe = (TextView) findViewById(R.id.qaTxv1);
+        questionTextView = (TextView) findViewById(R.id.questionTxv);
 
+        //ボタンをウィジェットに登録
         btnQA = new Button[4];
         btnQA[0] = (Button) findViewById(R.id.qaBtnAnswer1);
         btnQA[1] = (Button) findViewById(R.id.qaBtnAnswer2);
         btnQA[2] = (Button) findViewById(R.id.qaBtnAnswer3);
         btnQA[3] = (Button) findViewById(R.id.qaBtnAnswer4);
-        for(int i = 0; i < btnQA.length ; i++){
+        for (int i = 0; i < btnQA.length; i++) {
             btnQA[i].setOnClickListener(this);
         }
 
-
-        //アンサーボタンの外枠を隠す
+        //アンサーボタンの外枠
         imvStroke = new ImageView[4];
         imvStroke[0] = (ImageView) findViewById(R.id.qaImgStroke1);
         imvStroke[1] = (ImageView) findViewById(R.id.qaImgStroke2);
         imvStroke[2] = (ImageView) findViewById(R.id.qaImgStroke3);
         imvStroke[3] = (ImageView) findViewById(R.id.qaImgStroke4);
-        for(int i = 0; i < imvStroke.length ; i++){
-            imvStroke[i].setVisibility(View.GONE);
-        }
+
 
         //○✖画像非表示
         imvMaru = new ImageView[4];
@@ -94,19 +104,12 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
         imvMaru[1] = (ImageView) findViewById(R.id.imaMaru2);
         imvMaru[2] = (ImageView) findViewById(R.id.imgMaru3);
         imvMaru[3] = (ImageView) findViewById(R.id.imgMaru4);
-        for(int i = 0; i < imvMaru.length ; i++){
-            imvMaru[i].setVisibility(View.GONE);
-        }
 
         imvBatu = new ImageView[4];
         imvBatu[0] = (ImageView) findViewById(R.id.imgBatu1);
         imvBatu[1] = (ImageView) findViewById(R.id.imgBatu2);
         imvBatu[2] = (ImageView) findViewById(R.id.imgBatu3);
         imvBatu[3] = (ImageView) findViewById(R.id.imgBatu4);
-        for(int i = 0; i < imvBatu.length ; i++){
-            imvBatu[i].setVisibility(View.GONE);
-        }
-
 
         //ボリュームボタンウェジェットに登録
         volumeButton = (Button) findViewById(R.id.volumeBtn2);
@@ -115,175 +118,255 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
         //LinearKayoutをウェジェットに登録
         animeL = (LinearLayout) findViewById(R.id.animationL);
 
+        //プリファレンス利用準備
         pref = new PreferenceC(this);
 
         //サウンド設定
-        //sound = new sound(mSoundId);
-        sound.setSoundON(pref.readConfig("soundON", true));
+        soundSeikai = new Sound(this, R.raw.seikai1);
+        soundHazure = new Sound(this, R.raw.hazure1);
+        soundSeikai.setSoundON(pref.readConfig("soundON", true));
 
         //正解
-        String[] ca = MainActivity.getCorrectAnswer();
-
+        correct = MainActivity.getCorrectAnswer();
         //問題
-        String[] qu = MainActivity.getQuestion();
-        String Question = qu[0];   //問題文
+        question = MainActivity.getQuestion();
         //誤答セット
-        String[][] ia = MainActivity.getIncorrectAnswer();
+        incorrect = MainActivity.getIncorrectAnswer();
+
+        //スレッド利用のためのハンドラー
+        handler = new Handler();
+        if (correct == null || question == null || incorrect == null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            QA.this.finish();
+        }
+
+        init();
+        AnimationLinear();
+        setOuestion();
+        animStart();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-
-        //効果音を使えるように読み込み
-        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-        mSoundId[0] = mSoundPool.load(getApplicationContext(),R.raw.seikai1, 1);
-        mSoundId[1] = mSoundPool.load(getApplicationContext(),R.raw.hazure1, 1);
-
-        //((TextView)findViewById(R.id.qaTxv1)).setText(QuestionNo);
-
-        //問題文セット処理　呼び出し
-        //setOuestion();
-
+        for(int i = 0; i < correction.length; i++){
+            correction[i] = 0;
+        }
     }
 
-    private void questionStart(){
-        int[] array
+    /**
+     * アンサーボタン外枠の初期化
+     * 丸バツ画像の非表示
+     */
+    private void init() {
+        //アンサーボタンの外枠を隠す
+        for (int i = 0; i < imvStroke.length; i++) {
+            imvStroke[i].setVisibility(View.GONE);
+        }
+        //○✖画像非表示
+        for (int i = 0; i < imvMaru.length; i++) {
+            imvMaru[i].setVisibility(View.GONE);
+        }
+        for (int i = 0; i < imvBatu.length; i++) {
+            imvBatu[i].setVisibility(View.GONE);
+        }
     }
 
-    //問題文セット処理
-    private void setOuestion(){
-//        //作成したDatabaseHelperクラスに読み取り専用でアクセス
-//        DatabaseHelper dbHelper =
-//        SQLiteDatabase db = deHelper.getReadableDatabase();
-//
-//        /*
-//        SELECT文
-//        テーブル名「Question_Answer」からidがマッチする項目を取得する条件式
-//        */
-//        String sql = "SELECT Question, Answer1, Answer2, Answer3, Answer4 FROM Question_Answer WHERE _id";
-//
+    /**
+     * 問題文、選択肢セット
+     */
+    private void setOuestion() {
+        //一時保存用の配列
+        int[] arrayNum = new int[3];
+        //-1で初期化　のちに0-2が入るのでそれ以外の数で初期化
+        for (int i = 0; i < arrayNum.length; i++) {
+            arrayNum[i] = -1;
+        }
+        if (COUNT_Q > count) {
+            init();
 
-        //データベースから取ってきたデータを変数にセット
+            qaTextViwe.setText(QuestionNo[count]);
+            questionTextView.setText(question[count]);
+            for (int i = 0; i < 3; ) {
+                int randNum = new java.util.Random().nextInt(4);
+                if (isCheckNum(arrayNum, randNum)) {
+                    //なにもしない
+                } else {
+                    arrayNum[i] = randNum;
+                    btnQA[randNum].setText(incorrect[count][i]);
+                    btnQA[randNum].setTag("false");
+                    i++;
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                if (isCheckNum(arrayNum, i)) {
+                    //なにもしない
+                } else {
+                    btnQA[i].setText(correct[count]);
+                    btnQA[i].setTag("true");
+                    i++;
+                }
+            }
+        } else {
+            Intent intent = new Intent(QA.this, Results.class);
+            startActivity(intent);
+            QA.this.finish();
+        }
+        count++;
+    }
 
-        ((TextView)findViewById(R.id.questionTxv)).setText(Question);   //問題文をテキストビューに表示
-        ((Button)findViewById(R.id.qaBtnAnswer1)).setText(Answer1);     //選択肢をボタンに表示
-        ((Button)findViewById(R.id.qaBtnAnswer2)).setText(Answer2);     //選択肢をボタンに表示
-        ((Button)findViewById(R.id.qaBtnAnswer3)).setText(Answer3);     //選択肢をボタンに表示
-        ((Button)findViewById(R.id.qaBtnAnswer4)).setText(Answer4);     //選択肢をボタンに表示
-
-
-
-
+    private boolean isCheckNum(int[] arrayNum, int checkNum) {
+        for (int i = 0; i < arrayNum.length; i++) {
+            if (arrayNum[i] == checkNum) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void onClick(View v) {
-        //１０回回す
-        for (int i=0; i < QuestionNo.length; i++) {
+        if(v == btnQA[0]){
+            imvStroke[0].setVisibility(View.VISIBLE);
+        }else if(v == btnQA[1]){
+            imvStroke[1].setVisibility(View.VISIBLE);
+        }else if(v == btnQA[2]){
+            imvStroke[2].setVisibility(View.VISIBLE);
+        }else if(v == btnQA[3]){
+            imvStroke[3].setVisibility(View.VISIBLE);
+        }
 
-            //アニメーション開始
-            AnimationLinear();
-
-            //上のテキストに現在問題数を表示
-            ((TextView)findViewById(R.id.qaTxv1)).setText(QuestionNo[i]);
-
-            //押されたボタンのテキストと正解を比較
-            if (((Button) v).getText().equals(Kotae)) {
-
-                //正解の効果音処理
-                mSoundPool.play(mSoundId[0], 1.0f, 1.0f, 0, 0, 1.0f);   //正解音再生
-
-                //○✖画像表示
-                if (((Button) v).getText()==Kotae){
-
-                }else {
-
-                }
-
-                //データベース更新処理
-                ContentValues values = new ContentValues();
-                //フラグ 0から1
-                values.put("QuestionFlag", 1);
-                //カラム選択
-                String whereClause = "_id = ?";
-                //データベースと接続
-                DatabaseHelper dbHelper = new DatabaseHelper(this);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                //データベース更新
-                int ret;
-                try {
-                    ret = db.update("Question_Answer", values, whereClause,
-                            null);
-                } finally {
-                    db.close();
-                }
-                if (ret == -1) {
-                } else {
-                }
-
-            } else {
-                //不正解の効果音処理
-                mSoundPool.play(mSoundId[1], 1.0f, 1.0f, 0, 0, 1.0f);   //不正解音
-
-                //○✖画像表示
-                if (((Button) v).getText()==Kotae){
-
-                }else {
-
-                }
-
-            }
+        if (v.getTag().equals("true")) {
+            soundSeikai.playSE();
+            correctionF = 1;
+        }
+        if (v.getTag().equals("false")) {
+            soundHazure.playSE();
+            correctionF = 0;
+        }
+        if (animatorSet != null) {
+            animatorSet.cancel();
         }
 
         //ボリュームボタン処理
-        if (v == volumeButton){
-            if(sound.isSoundON()){
+        if (v == volumeButton) {
+            if (soundSeikai.isSoundON()) {
                 Sound.setSoundON(false);
-                volumeButton.setBackgroundResource(R.drawable.mute);
+                volumeButton.setBackgroundResource(R.drawable.volume_off);
                 pref.writeConfig("soundON", false);
-            }else{
+            } else {
                 Sound.setSoundON(true);
-                volumeButton.setBackgroundResource(R.drawable.volume);
+                volumeButton.setBackgroundResource(R.drawable.volume_on);
                 pref.writeConfig("soundON", true);
+            }
+        }
+    }
+
+    private void sleepThread() {
+        if(correctionF == 0){
+            correction[count-1] = 0;
+        }else if(correctionF == 1){
+            correction[count-1] = 1;
+        }
+        correctionF = 0;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageChange();
+                        if (animatorSet != null) {
+                            animatorSet.cancel();
+                            animatorSet = null;
+                        }
+                    }
+                });
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AnimationLinear();
+                        setOuestion();
+                        animStart();
+                    }
+                });
+            }
+        }).start();
+        Log.e("question", Arrays.toString(correction));
+    }
+
+    private void imageChange() {
+        for (int i = 0; i < 4; i++) {
+            if (btnQA[i].getTag().equals("true")) {
+                imvMaru[i].setVisibility(View.VISIBLE);
+            } else if (btnQA[i].getTag().equals("false")) {
+                imvBatu[i].setVisibility(View.VISIBLE);
             }
         }
     }
 
     //効果音に関するものは全て開放
     @Override
-    protected  void onPause(){
+    protected void onPause() {
         super.onPause();
-        //SoundPool開放
-        mSoundPool.unload(mSoundId[0]);
-        mSoundPool.unload(mSoundId[1]);
-
-        mSoundPool.release();
+        if (animatorSet != null) {
+            animatorSet.cancel();
+            animatorSet = null;
+        }
+        soundSeikai.releaseSE();
+        soundHazure.releaseSE();
     }
 
-    private void AnimationLinear(){
+    /**
+     * アニメーションをスタートさせる
+     */
+    private void animStart() {
+        if (count <= COUNT_Q) {
+            animatorSet.start();
+        }
+    }
+
+    /**
+     * アニメーションの準備
+     */
+    private void AnimationLinear() {
         ObjectAnimator scaledown = ObjectAnimator.ofFloat(animeL, "scaleX", 1.0f, 0.0f);
         scaledown.setDuration(3000);
         animeL.setPivotX(0);
         scaledown.setInterpolator(new LinearInterpolator());
 
-        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet = new AnimatorSet();
+        animatorSet.addListener(this);
         animatorSet.play(scaledown);
-        animatorSet.start();
     }
 
     @Override
-    public void onAnimationStart(Animation animation) {
+    public void onAnimationStart(Animator animation) {
+    }
 
+    /**
+     * アニメーションが終わるかクリックされたときここを通る
+     * @param animation
+     */
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        sleepThread();
     }
 
     @Override
-    public void onAnimationEnd(Animation animation) {
-
+    public void onAnimationCancel(Animator animation) {
     }
 
     @Override
-    public void onAnimationRepeat(Animation animation) {
-
+    public void onAnimationRepeat(Animator animation) {
     }
 }
