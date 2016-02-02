@@ -18,7 +18,9 @@
 
         <activity android:name=".Clear">
         </activity>
+        <activity android:name=".Results">
 
+        </activity>
         <activity android:name=".QA" />
 
     </application>

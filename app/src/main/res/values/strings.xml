@@ -13,6 +13,8 @@
     <string name="clear_text2">おめでとうございます。\nあなたは全問題をクリアしましたので、このゲームは終了です。\n定着した知識を活かして、\n新たなステージで活躍されることをお祈り致します。</string>
     <string name="results_title">Results</string>
     <string name="return_top">TOP画面</string>
+    <string name="magure_button">マグレ</string>
+    <string name="questionstop_button">出題停止</string>
 
 
 </resources>
