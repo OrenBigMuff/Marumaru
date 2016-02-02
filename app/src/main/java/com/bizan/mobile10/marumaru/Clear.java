@@ -26,77 +26,80 @@ public class Clear extends AppCompatActivity
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
     TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
+    DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
+
+    //残問の配列（受け）
+    String zamWord[] = MainActivity.getQuestion();
+    String zamMean[] = MainActivity.getCorrectAnswer();
+
     //Buttonを動的にレイアウトする為のゴニョゴニョ
 //    private final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
     private final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
-
-    //仮初めの定数
-    private final static String DB_NAME = "QA.db";
-    private final static String DB_TABLE = "Question_Answer";
-    private final static int DB_VERSION = 1;
-    //仮初めの定数ここまで
-
-    //仮初めの変数
-    private SQLiteDatabase db;
-    //仮初めの変数ここまで
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
-        //DBオブジェクトの取得
-        DBHelper dbHelper = new DBHelper(this);
-        db = dbHelper.getWritableDatabase();    //データベースオブジェクト
-
-        //とりあえず残問数9問で作ってみるね（本番はここでDBから残問を取得してね。）←最終的に消す
-        numZanmon = 9;
-
         //DBから残問数を取得するにはこちら
-/*        try {
-            numZanmon = readZanmon();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        numZanmon = dbC.countZanmon();
         //DBから残問数を取得する_ここまで
 
+        if(numZanmon == 0){
 
-        Zanmon zanmon[] = new Zanmon[numZanmon];
+            LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
+            LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
+            cardLinear.removeAllViews();
+            cardLinearZanmon.removeAllViews();
+
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
+            TextView clearTitle = (TextView) linearLayout.findViewById(R.id.textBox2);
+            clearTitle.setText(R.string.cleat_text2);
+
+            cardLinear.addView(linearLayout, 0);
+
+            //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
+            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
+
+        }else{
+
+            Zanmon zanmon[] = new Zanmon[numZanmon];
+
+            //残問配列にDBの値を格納していく・・・tagいらんかったね(笑)
+            for(int i=0; i<numZanmon; i++){
+                zanmon[i] = new Zanmon(i, zamWord[i], zamMean[i]);
+            }
 
 
-        //残問配列にDBの値を格納していく
-        for(int i=0; i<numZanmon; i++){
-            zanmon[i] = new Zanmon(i, "", "", "");
 
-        }
+            LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
+            LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
+            cardLinear.removeAllViews();
+            cardLinearZanmon.removeAllViews();
 
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
+            CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
 
+            cardLinear.addView(linearLayout, 0);
 
-        LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
-        LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
-        cardLinear.removeAllViews();
-        cardLinearZanmon.removeAllViews();
-
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
-        CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
-
-        cardLinear.addView(linearLayout, 0);
-
-        Log.v("Clearろぐ", "ここまでOK");
+            Log.v("Clearろぐ", "ここまでOK");
 
 
-        for (int i = 1; i <= numZanmon; i++) {
-            LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
-            CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
-            zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
-            zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
-            zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
-            zanmonTitle.setText("憶えていない単語 " + i);
-            zanmonWord.setText("Not Remember Words " + i);
-            zanmonMean.setText("Meaning of Words " + i);
+            //for文でせっせとCardViewを作っていきます。
+            for (int i = 1; i <= numZanmon; i++) {
+                LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
+                CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
+                zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
+                zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
+                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
+                zanmonTitle.setText("憶えていない単語 No." + i);
+                zanmonWord.setText(zanmon[i].question);
+                zanmonMean.setText(zanmon[i].mean);
+
+                //スナックバーアクションを割り当てたいときは以下を追加　←最終的に消す
             /*cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,9 +109,12 @@ public class Clear extends AppCompatActivity
                 }
             });*/
 
-            cardLinearZanmon.addView(linearLayout2, i - 1);     //i=0からにするために　i-1
+                cardLinearZanmon.addView(linearLayout2, i-1);     //i=0からにするために　i-1
+            }
+            //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
+            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
         }
-        cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
+
     }
 
     @Override
@@ -137,13 +143,11 @@ public class Clear extends AppCompatActivity
 
     private class Zanmon{
         int tag;
-        String title;
         String question;
         String mean;
 
-        Zanmon(int tag, String title, String question, String mean){
+        Zanmon(int tag, String question, String mean){
             this.tag = tag;
-            this.title = title;
             this.question = question;
             this.mean = mean;
         }

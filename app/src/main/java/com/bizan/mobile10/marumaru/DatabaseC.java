@@ -79,6 +79,13 @@ public class DatabaseC {
                 contentValues.put("QuestionFlag", Integer.parseInt(st.nextToken()));
                 contentValues.put("CreateDate", st.nextToken());
                 contentValues.put("UpdateDate", st.nextToken());
+
+                /*
+                補足⇒ insert(String table, String nullColumnHack, ContentValues values)
+                第1引数はテーブル名です。
+                第2引数のnullColumnHackはデータを挿入する際にnull値が許可されていないカラムに代わりに利用される値を指定します。
+                第3引数がContentValueオブジェクトです。
+                また、戻り値は正常終了した場合はROWID、失敗した場合は-1となります。*/
                 if (db.insert(dbTable, "", contentValues) == -1) {
                     return -1;
                 }
