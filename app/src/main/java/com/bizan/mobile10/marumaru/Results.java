@@ -17,10 +17,10 @@ import android.widget.TextView;
 public class Results extends AppCompatActivity {
 
     private static MainActivity mainActivity = new MainActivity();
-
+    private static QA qA = new QA();
 
     private int[] mId = mainActivity.getId();
-    private int[] mCorrection = {1,0,0,1,0,1,1,1,0,0};
+    private int[] mCorrection = qA.getCorrection();
     private String[] mQuestion = mainActivity.getQuestion();
     private String[] mAnswer = mainActivity.getCorrectAnswer();
 
