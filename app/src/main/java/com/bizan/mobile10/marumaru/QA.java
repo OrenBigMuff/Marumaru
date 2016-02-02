@@ -148,7 +148,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener,Animat
     }
 
     private void questionStart(){
-        int[] array
+        int[] array;
     }
 
     //問題文セット処理

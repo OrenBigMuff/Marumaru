@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.MediaPlayer;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class Clear extends AppCompatActivity
         implements OnClickListener {
+
+    MediaPlayer mp =MediaPlayer.create(this, R.raw.ifudodo);
 
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
@@ -41,6 +46,14 @@ public class Clear extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
+        try {
+            mp.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mp.start();
+
         //DBから残問数を取得するにはこちら
         numZanmon = dbC.countZanmon();
         //DBから残問数を取得する_ここまで
@@ -55,7 +68,7 @@ public class Clear extends AppCompatActivity
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_clear, null);
             TextView clearTitle = (TextView) linearLayout.findViewById(R.id.textBox2);
-            clearTitle.setText(R.string.cleat_text2);
+            clearTitle.setText(R.string.clear_text2);
 
             cardLinear.addView(linearLayout, 0);
 
@@ -123,6 +136,7 @@ public class Clear extends AppCompatActivity
         Log.v("Button_clr", "onClick");
         DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
         dbC.reset();
+        mp.release();
         this.finish();
     }
 

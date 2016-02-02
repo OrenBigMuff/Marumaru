@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pref = new PreferenceC(this);
 
         //サウンド設定
-        sound = new Sound(this, R.raw.sample);
+        sound = new Sound(this, R.raw.see);
         sound.setSoundON(pref.readConfig("soundON", true));
 
         //初回起動であればここでCommentary
@@ -168,11 +168,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == volButton) {
             if (sound.isSoundON()) {
                 Sound.setSoundON(false);
-                volButton.setBackgroundResource(R.drawable.mute);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                 pref.writeConfig("soundON", false);
             } else {
                 Sound.setSoundON(true);
-                volButton.setBackgroundResource(R.drawable.volume);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                 pref.writeConfig("soundON", true);
             }
             sound.playSE();
