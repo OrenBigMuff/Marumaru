@@ -19,12 +19,10 @@ public class Results extends AppCompatActivity {
     private static MainActivity mainActivity = new MainActivity();
     private static QA qA = new QA();
 
-    private int[] mId = mainActivity.getId();
-    private int[] mCorrection = qA.getCorrection();
-    private String[] mQuestion = mainActivity.getQuestion();
-    private String[] mAnswer = mainActivity.getCorrectAnswer();
-
-    private Button mBtnFluke;
+    private int[] mId = mainActivity.getId();                       //問題のID
+    private int[] mCorrection = qA.getCorrection();                 //問題の正誤
+    private String[] mQuestion = mainActivity.getQuestion();        //問題
+    private String[] mAnswer = mainActivity.getCorrectAnswer();     //答え
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +45,13 @@ public class Results extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            final LinearLayout snackbarLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
 
             //正解の場合
             if (mCorrection[i]==1) {
-                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_correct, null);
+                final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_correct, null);
 
-                CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCcCard);
+                final CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCcCard);
 
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCcNumber);
@@ -69,15 +68,14 @@ public class Results extends AppCompatActivity {
                 cardLinear.addView(linearLayout, i);
 
                 //マグレボタン
-                mBtnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
+                final Button mBtnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
                 mBtnFluke.setTag(i);
                 mBtnFluke.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
                             //スナックバーを表示させる
-                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
-                            Snackbar.make(mLinearLayout,
+                            Snackbar.make(snackbarLayout,
                                     "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
                                     Snackbar.LENGTH_SHORT).show();
 
@@ -89,8 +87,7 @@ public class Results extends AppCompatActivity {
                         }
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
                             //スナックバーを表示させる
-                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
-                            Snackbar.make(mLinearLayout,
+                            Snackbar.make(snackbarLayout,
                                     "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
                                     Snackbar.LENGTH_SHORT).show();
 
@@ -131,8 +128,7 @@ public class Results extends AppCompatActivity {
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                Results.this.finish();
             }
         });
     }
@@ -140,6 +136,14 @@ public class Results extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        if (mId.length!=10) {
+            //IDの要素数が10個じゃなければDBに書き込まずスルー
+            return;
+        }else if (mCorrection.length!=10) {
+            //正誤の要素数が10個じゃなければDBに書き込まずスルー
+            return;
+        }
 
         //Databaseへ出題フラグの登録
         DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());

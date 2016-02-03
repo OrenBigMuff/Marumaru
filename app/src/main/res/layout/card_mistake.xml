@@ -35,7 +35,8 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="17dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                style="@style/fontSize_Normal" />
 
             <TextView
                 android:id="@+id/txvCmQuestion"
@@ -45,7 +46,8 @@
                 android:text="単語"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="30dp"
-                android:layout_alignLeft="@+id/txvCmNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber"
+                style="@style/fontSize_Big" />
 
             <TextView
                 android:id="@+id/txvCmAnswer"
@@ -55,7 +57,8 @@
                 android:text="意味"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20dp"
-                android:layout_alignLeft="@+id/txvCmNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber"
+                style="@style/fontSize_Normal" />
 
             <ImageView
                 android:layout_width="60sp"
