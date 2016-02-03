@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -142,8 +143,10 @@ public class Clear extends AppCompatActivity
 
                 cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
-            //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
-//            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
+            LinearLayout blankLayout = new LinearLayout(this);
+//            blankLayout.setBackgroundColor(Color.WHITE);
+            blankLayout.setLayoutParams(new LinearLayout.LayoutParams(MP, 150));
+            cardLinearZanmon.addView(blankLayout);
         }
 
     }
