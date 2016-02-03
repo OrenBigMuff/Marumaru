@@ -25,12 +25,14 @@ public class Clear extends AppCompatActivity
         implements OnClickListener {
 
     MediaPlayer mp;
+    private PreferenceC pref;               //プリファレンス
+    private Sound sound;                    //サウンド
 
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
-    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
+//    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
     DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
 
@@ -50,11 +52,16 @@ public class Clear extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
+        //コンフィグ使う準備
+        pref = new PreferenceC(this);
+
+
 //BGM読込
         try
         {
             mp = MediaPlayer.create(this, R.raw.closeyoureyes);
             mp.setLooping(true);
+
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -69,7 +76,14 @@ public class Clear extends AppCompatActivity
         btnInit = (Button) this.findViewById(R.id.btnInit);
         btnInit.setOnClickListener(this);
 
+
+        if(!pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+            mp.pause();
+        }
         mp.start();
+
+
 
 
         //DBから残問数を取得するにはこちら
@@ -95,7 +109,7 @@ public class Clear extends AppCompatActivity
 
         }else{
 
-            Zanmon zanmon[] = new Zanmon[numZanmon];
+            final Zanmon zanmon[] = new Zanmon[numZanmon];
 
             //残問配列にDBの値を格納していく・・・tagいらんかったね(笑)
             for(int i=0; i<numZanmon; i++){
@@ -125,21 +139,23 @@ public class Clear extends AppCompatActivity
                 CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
                 zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
                 zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
-                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
+//                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
                 int j = i + 1;
                 zanmonTitle.setText("憶えていない単語 No." + j);
                 zanmonWord.setText(zanmon[i].question);
-                zanmonMean.setText(zanmon[i].mean);
+//                zanmonMean.setText(zanmon[i].mean);
 
                 //スナックバーアクションを割り当てたいときは以下を追加　←最終的に消す
-            /*cardView2.setTag(i);
+            cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Don't touch me!!", Snackbar.LENGTH_LONG)
+                    int x = (int) view.getTag();
+                    String tmp = zanmon[x].mean;
+                    Snackbar.make(view, tmp , Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-            });*/
+            });
 
                 cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
@@ -172,10 +188,13 @@ public class Clear extends AppCompatActivity
                 if (mp.isPlaying()) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
+                    pref.writeConfig("soundON", false);
                 } else {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
+                    pref.writeConfig("soundON", true);
                 }
+                sound.playSE();
                 break;
         }
     }
