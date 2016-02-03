@@ -42,4 +42,7 @@
     <style name="CardViewConglaStyle" parent="CardView">
         <item name="cardBackgroundColor">@color/P5ConglacheColor</item>
     </style>
+    <style name="Linearr">
+        <item name="android:background">@drawable/linearr</item>
+    </style>
 </resources>
