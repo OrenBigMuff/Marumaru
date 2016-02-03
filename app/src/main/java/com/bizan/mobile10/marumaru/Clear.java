@@ -42,6 +42,7 @@ public class Clear extends AppCompatActivity
     private final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
 
     private Button volButton;               //サウンドボタン
+    private Button btnInit;                 //Initボタン
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class Clear extends AppCompatActivity
 //BGM読込
         try
         {
-            mp = MediaPlayer.create(this, R.raw.ifudodo);
+            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
             mp.setLooping(true);
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
@@ -64,6 +65,8 @@ public class Clear extends AppCompatActivity
 
         volButton = (Button) this.findViewById(R.id.btnmavol_cl);
         volButton.setOnClickListener(this);
+        btnInit = (Button) this.findViewById(R.id.btnInit);
+        btnInit.setOnClickListener(this);
 
         mp.start();
 
@@ -87,7 +90,7 @@ public class Clear extends AppCompatActivity
             cardLinear.addView(linearLayout, 0);
 
             //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
-            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
+//            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
 
         }else{
 
@@ -122,7 +125,8 @@ public class Clear extends AppCompatActivity
                 zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
                 zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
                 zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
-                zanmonTitle.setText("憶えていない単語 No." + i);
+                int j = i + 1;
+                zanmonTitle.setText("憶えていない単語 No." + j);
                 zanmonWord.setText(zanmon[i].question);
                 zanmonMean.setText(zanmon[i].mean);
 
@@ -139,7 +143,7 @@ public class Clear extends AppCompatActivity
                 cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
             //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
-            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
+//            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
         }
 
     }
@@ -153,7 +157,7 @@ public class Clear extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case 1:
+            case R.id.btnInit:
             //ここにイニシャライズの呪文(メソッド)を書き込む
             Log.v("Button_clr", "onClick");
             DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
@@ -163,8 +167,10 @@ public class Clear extends AppCompatActivity
                 break;
             case R.id.btnmavol_cl:
                 if (mp.isPlaying()) {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                 } else {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                 }
                 break;
