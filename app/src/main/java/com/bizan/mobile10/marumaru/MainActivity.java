@@ -133,28 +133,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sound = new Sound(this, R.raw.see);
         sound.setSoundON(pref.readConfig("soundON", true));
 
+
+
         //初回起動であればここでCommentary
-//        if(pref.readConfig("comm", false)){
-//            Intent intent = new Intent(this, QA.class);
-//            startActivity(intent);
-//        }
+        if(!pref.readConfig("comm", false) || !pref.readConfig("newcomm",false)){
+            pref.writeConfig("newcomm", true);
+            Intent intent = new Intent(this, Commentary.class);
+            startActivity(intent);
+        }
 
         txvmazanmon = (TextView) findViewById(R.id.txvmazanmon);
         txvmatotal = (TextView) findViewById(R.id.txvmatotal);
         txvmakuriado = (TextView) findViewById(R.id.txvmakuriado);
 
-        float countallrow = dbC.countAllRow();
-        float countzanmon = dbC.countZanmon();
+        int countallrow = dbC.countAllRow();
+        int countzanmon = dbC.countZanmon();
         txvmatotal.setText(String.valueOf(countallrow));
         txvmazanmon.setText(String.valueOf(countzanmon));
-        double temp = (countzanmon / countallrow) * 100;
-        String stemp = String.valueOf(temp);
-        stemp = stemp.substring(0, 5);
-        txvmakuriado.setText(stemp);
+
+        float temp = 100-((countzanmon / (float)countallrow) * 100);
+        txvmakuriado.setText(String.format("%.1f%%", temp));
+
         long endTime = System.currentTimeMillis();
         Log.e("time", (endTime - startTime) + "");
-
-
     }
 
     @Override
@@ -162,12 +163,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         //問題セット10問未満ならクリア画面を表示する
         if (!qset()) {
-            Intent intent = new Intent(this, QA.class);
+            Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
         }
-        //boolean a = dbC.updateQuestionFlag(2, 1);
-        //dbC.reset();
-        Log.e("countAllRow", dbC.countAllRow() + "@" + dbC.countZanmon());
+        if(pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+        }else{
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+        }
 
     }
 
@@ -205,19 +208,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean qset() {
         Cursor cursor = dbC.qset(String.valueOf(QNUM));
         int i = 0;
+        while (cursor.moveToNext()) {
+            id[i] = Integer.parseInt(cursor.getString(0));
+            question[i] = cursor.getString(1);
+            correctAnswer[i] = cursor.getString(2);
+            incorrectAnswer[i][0] = cursor.getString(3);
+            incorrectAnswer[i][1] = cursor.getString(4);
+            incorrectAnswer[i][2] = cursor.getString(5);
+            i++;
+        }
         if (cursor.getCount() < 10) {
             cursor.close();
             return false;
-        } else {
-            while (cursor.moveToNext()) {
-                id[i] = Integer.parseInt(cursor.getString(0));
-                question[i] = cursor.getString(1);
-                correctAnswer[i] = cursor.getString(2);
-                incorrectAnswer[i][0] = cursor.getString(3);
-                incorrectAnswer[i][1] = cursor.getString(4);
-                incorrectAnswer[i][2] = cursor.getString(5);
-                i++;
-            }
         }
         cursor.close();
         return true;
