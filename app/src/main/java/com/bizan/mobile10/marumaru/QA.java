@@ -42,8 +42,11 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     public static int[] getCorrection() {   //次ページ用の配列とそのゲッター
         return correction;
     }
+
     private static int[] correction = new int[COUNT_Q];
     private int correctionF = 0;            //正解不正解のフラッグ
+
+    private boolean btnF = true;                   //連打防止ボタンフラグ
 
     //レイアウト
     private Button volumeButton;
@@ -76,6 +79,9 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.qa);
+
+        //プリファレンス利用準備
+        pref = new PreferenceC(this);
 
         qaTextViwe = (TextView) findViewById(R.id.qaTxv1);
         questionTextView = (TextView) findViewById(R.id.questionTxv);
@@ -114,12 +120,15 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         //ボリュームボタンウェジェットに登録
         volumeButton = (Button) findViewById(R.id.volumeBtn2);
         volumeButton.setOnClickListener(this);
+        if (pref.readConfig("soundON", true)) {
+            volumeButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+        } else {
+            volumeButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+        }
 
         //LinearKayoutをウェジェットに登録
         animeL = (LinearLayout) findViewById(R.id.animationL);
 
-        //プリファレンス利用準備
-        pref = new PreferenceC(this);
 
         //サウンド設定
         soundSeikai = new Sound(this, R.raw.seikai1);
@@ -150,7 +159,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     @Override
     protected void onResume() {
         super.onResume();
-        for(int i = 0; i < correction.length; i++){
+        for (int i = 0; i < correction.length; i++) {
             correction[i] = 0;
         }
     }
@@ -229,47 +238,53 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
 
     @Override
     public void onClick(View v) {
-        if(v == btnQA[0]){
-            imvStroke[0].setVisibility(View.VISIBLE);
-        }else if(v == btnQA[1]){
-            imvStroke[1].setVisibility(View.VISIBLE);
-        }else if(v == btnQA[2]){
-            imvStroke[2].setVisibility(View.VISIBLE);
-        }else if(v == btnQA[3]){
-            imvStroke[3].setVisibility(View.VISIBLE);
-        }
+        if (btnF && v != volumeButton) {
+            btnF = false;
+            if (v == btnQA[0]) {
+                imvStroke[0].setVisibility(View.VISIBLE);
+            } else if (v == btnQA[1]) {
+                imvStroke[1].setVisibility(View.VISIBLE);
+            } else if (v == btnQA[2]) {
+                imvStroke[2].setVisibility(View.VISIBLE);
+            } else if (v == btnQA[3]) {
+                imvStroke[3].setVisibility(View.VISIBLE);
+            }
 
-        if (v.getTag().equals("true")) {
-            soundSeikai.playSE();
-            correctionF = 1;
-        }
-        if (v.getTag().equals("false")) {
-            soundHazure.playSE();
-            correctionF = 0;
-        }
-        if (animatorSet != null) {
-            animatorSet.cancel();
+            if (v.getTag().equals("true")) {
+                correctionF = 1;
+            }
+            if (v.getTag().equals("false")) {
+                correctionF = 0;
+            }
+            if (animatorSet != null) {
+                animatorSet.cancel();
+            }
         }
 
         //ボリュームボタン処理
         if (v == volumeButton) {
             if (soundSeikai.isSoundON()) {
                 Sound.setSoundON(false);
-                volumeButton.setBackgroundResource(R.drawable.volume_off);
+                volumeButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                 pref.writeConfig("soundON", false);
             } else {
                 Sound.setSoundON(true);
-                volumeButton.setBackgroundResource(R.drawable.volume_on);
+                volumeButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                 pref.writeConfig("soundON", true);
             }
+            soundSeikai.playSE();
         }
+
     }
 
     private void sleepThread() {
-        if(correctionF == 0){
-            correction[count-1] = 0;
-        }else if(correctionF == 1){
-            correction[count-1] = 1;
+        btnF = false;
+        if (correctionF == 0) {
+            soundHazure.playSE();
+            correction[count - 1] = 0;
+        } else if (correctionF == 1) {
+            soundSeikai.playSE();
+            correction[count - 1] = 1;
         }
         correctionF = 0;
 
@@ -296,6 +311,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        btnF = true;
                         AnimationLinear();
                         setOuestion();
                         animStart();
@@ -357,6 +373,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
 
     /**
      * アニメーションが終わるかクリックされたときここを通る
+     *
      * @param animation
      */
     @Override
