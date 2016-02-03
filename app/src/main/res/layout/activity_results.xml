@@ -14,7 +14,7 @@
         android:layout_weight="6"
         android:textSize="26dp"
         style="@style/yellow_back"
-        android:gravity="center" />
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -46,6 +46,7 @@
         android:layout_weight="5.5"
         android:layout_gravity="center_horizontal"
         android:textSize="20dp"
-        style="@style/button_answer" />
+        style="@style/button_start"
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>
