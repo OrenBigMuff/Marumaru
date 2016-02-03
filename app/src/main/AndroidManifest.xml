@@ -22,6 +22,7 @@
 
         </activity>
         <activity android:name=".QA" />
+        <activity android:name=".Commentary" />
 
     </application>
 
