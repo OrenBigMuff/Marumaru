@@ -11,11 +11,15 @@
         android:textSize="17dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:id="@+id/button"
-        android:text="♪"
-        android:layout_gravity="right" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
+        android:layout_marginTop="5dp" android:layout_marginRight="5dp"
+        android:layout_gravity="right"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,6 +43,7 @@
         android:layout_height="wrap_content"
         android:text="TOP画面"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        style="@style/button_start" />
 
 </LinearLayout>
