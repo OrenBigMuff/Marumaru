@@ -26,12 +26,13 @@
         <Button
             android:layout_width="240dp"
             android:layout_height="75dp"
-            android:text="app Init"
+            android:text="アプリを初期化する"
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
             android:id="@+id/btnInit" android:layout_gravity="bottom" android:alpha="0.8"
             style="@style/button_start"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
+            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+            android:layout_margin="3dp"/>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

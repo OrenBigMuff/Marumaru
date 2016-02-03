@@ -54,7 +54,7 @@
                 android:textSize="26dp" android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"/>
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/zanmonMean"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:text="Meaning of Words"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20dp" android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"/>-->
 
 
 
