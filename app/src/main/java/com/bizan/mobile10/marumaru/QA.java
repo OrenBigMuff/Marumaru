@@ -220,9 +220,11 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                 }
             }
         } else {
-            Intent intent = new Intent(QA.this, Results.class);
-            startActivity(intent);
-            QA.this.finish();
+            if(count != (COUNT_Q * 2)) {
+                Intent intent = new Intent(QA.this, Results.class);
+                startActivity(intent);
+                QA.this.finish();
+            }
         }
         count++;
     }
@@ -278,6 +280,9 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     }
 
     private void sleepThread() {
+        if (count == (COUNT_Q * 2)) {
+            return;
+        }
         btnF = false;
         if (correctionF == 0) {
             soundHazure.playSE();
@@ -342,6 +347,8 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         }
         soundSeikai.releaseSE();
         soundHazure.releaseSE();
+        //いきなりResultsに移動する
+        count = COUNT_Q * 2;
     }
 
     /**
