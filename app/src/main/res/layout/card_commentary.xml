@@ -33,7 +33,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="CardView"
                 android:id="@+id/textBox"
-                android:layout_marginTop="10pdp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="17dp"
                 style="@style/fontSize_Small" />
 

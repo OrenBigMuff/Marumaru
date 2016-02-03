@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ public class Clear extends AppCompatActivity
 
     MediaPlayer mp;
     private PreferenceC pref;               //プリファレンス
-    private Sound sound;                    //サウンド
 
+    Snackbar snackbar;              //スナックバー
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
@@ -47,10 +48,14 @@ public class Clear extends AppCompatActivity
     private Button volButton;               //サウンドボタン
     private Button btnInit;                 //Initボタン
 
+    private CoordinatorLayout mCoodinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
+
+        mCoodinatorLayout = (CoordinatorLayout)findViewById(R.id.cdL);
 
         //コンフィグ使う準備
         pref = new PreferenceC(this);
@@ -152,8 +157,17 @@ public class Clear extends AppCompatActivity
                 public void onClick(View view) {
                     int x = (int) view.getTag();
                     String tmp = zanmon[x].mean;
-                    Snackbar.make(view, tmp , Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    snackbar = Snackbar.make(mCoodinatorLayout, tmp , Snackbar.LENGTH_INDEFINITE);
+//                    snackbar
+                    snackbar.setActionTextColor(Color.rgb(236,104,0));
+                    snackbar.getView().setBackgroundColor(Color.rgb(126, 206, 244));
+                    snackbar.setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                        }
+                    })
+                            .show();
                 }
             });
 
@@ -165,6 +179,23 @@ public class Clear extends AppCompatActivity
             cardLinearZanmon.addView(blankLayout);
         }
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(!pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+            mp.pause();
+        }
+        mp.start();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        mp.pause();
     }
 
     public void onDestroy() {
@@ -194,7 +225,6 @@ public class Clear extends AppCompatActivity
                     mp.start();
                     pref.writeConfig("soundON", true);
                 }
-                sound.playSE();
                 break;
         }
     }
