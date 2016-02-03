@@ -8,15 +8,20 @@
     android:fitsSystemWindows="true"
     tools:context="com.bizan.mobile10.marumaru.Clear">
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content" android:gravity="right">
     <Button
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:id="@+id/btnmavol"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
-        android:layout_marginTop="5dp" android:layout_marginRight="5dp"/>
+        android:id="@+id/btnmavol_cl"
 
+        android:background="@drawable/marumaru_sound_on"
+        android:alpha="0.8"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+
+        android:gravity="right"/>
+    </LinearLayout>
 
     <include layout="@layout/clear_layout"/>
 
