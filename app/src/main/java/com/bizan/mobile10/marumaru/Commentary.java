@@ -15,9 +15,10 @@ public class Commentary extends AppCompatActivity {
     CheckBox checkBox;
     Sound sound;
     PreferenceC pref;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_commentary);
         LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
         cardLinear.removeAllViews();
 
@@ -44,7 +45,7 @@ public class Commentary extends AppCompatActivity {
         pref = new PreferenceC(this);
         final PreferenceC pref = new PreferenceC(this);
 //        音楽ファイル入れて名前書く.
-        sound = new Sound(this,R.raw.see );
+        sound = new Sound(this, R.raw.see);
 
 
         Button button = (Button) findViewById(R.id.button);
@@ -52,14 +53,14 @@ public class Commentary extends AppCompatActivity {
             //音を消す
             @Override
             public void onClick(View view) {
-                if(sound.isSoundON()){
+                if (sound.isSoundON()) {
                     sound.setSoundON(false);
                     //iconChenge
-                }else{
+                } else {
                     sound.setSoundON(true);
                     //iconChenge
                 }
-                pref.writeConfig("soundON",sound.isSoundON());
+                pref.writeConfig("soundON", sound.isSoundON());
                 sound.playSE();
             }
         });
@@ -68,10 +69,11 @@ public class Commentary extends AppCompatActivity {
         Button button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             // TOP画面を表示
-            //finish()
             @Override
             public void onClick(View view) {
-                pref.writeConfig("comm",checkBox.isChecked());            }
+                pref.writeConfig("comm", checkBox.isChecked());
+                Commentary.this.finish();
+            }
         });
 
 
