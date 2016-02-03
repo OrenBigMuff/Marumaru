@@ -15,6 +15,9 @@
     <string name="return_top">TOP画面</string>
     <string name="magure_button">マグレ</string>
     <string name="questionstop_button">出題停止</string>
+    <string name="commentary_text1">英単語が10問出題されるので3秒以内に4択の中から選択して和訳してください。正解された問題はアプリがリセットされるまで出題されることはありません。</string>
+    <string name="commentary_text2">10問終了するとリザルト画面に遷移します。もしマグレで正解してしまった場合、その出題リストにマグレボタンがついてるので押してください。再度出題されるようになります。</string>
+    <string name="commentary_text3">残り問題数が10問を以下になるとクリアになります。クリアを目指して頑張ってください。！(∩´∀｀)∩</string>
 
 
 </resources>
