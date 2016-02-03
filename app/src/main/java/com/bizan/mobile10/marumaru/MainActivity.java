@@ -32,11 +32,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int DB_VERSION = 1;       //データベースのバージョン
     //テーブル名
     private static final String[] DB_TABLE = {"Question_Answer"};
+
     public static String getDB_TABLE() {
         return DB_TABLE[0];
     }
 
     private static DatabaseHelper dbHelper; //DBヘルパー
+
     public static DatabaseHelper getDbHelper() {
         return dbHelper;
     }
@@ -134,9 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sound.setSoundON(pref.readConfig("soundON", true));
 
 
-
         //初回起動であればここでCommentary
-        if(!pref.readConfig("comm", false) || !pref.readConfig("newcomm",false)){
+        if (!pref.readConfig("comm", false) || !pref.readConfig("newcomm", false)) {
             pref.writeConfig("newcomm", true);
             Intent intent = new Intent(this, Commentary.class);
             startActivity(intent);
@@ -147,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txvmazanmon.setOnLongClickListener(this);
         txvmatotal = (TextView) findViewById(R.id.txvmatotal);
         txvmakuriado = (TextView) findViewById(R.id.txvmakuriado);
-
 
 
         long endTime = System.currentTimeMillis();
@@ -162,9 +162,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
         }
-        if(pref.readConfig("soundON", true)){
+        if (pref.readConfig("soundON", true)) {
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-        }else{
+        } else {
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
         }
 
@@ -174,8 +174,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txvmatotal.setText(String.valueOf(countallrow));
         txvmazanmon.setText(String.valueOf(countzanmon));
 
-        float temp = 100-((countzanmon / (float)countallrow) * 100);
+        float temp = 100 - ((countzanmon / (float) countallrow) * 100);
         txvmakuriado.setText(String.format("%.1f%%", temp));
+
+
+        Cursor cursor = dbC.readDB();
+        int i = 0;
+        while (cursor.moveToNext()) {
+            Log.e("でーた", "QuestionFlag  "+cursor.getString(9) + "   id" + cursor.getString(0) + "Question" + cursor.getString(1) + "CorrectAnswer" + cursor.getString(2)+"PhoneticSymbol"+cursor.getString(3)+"UpdateDate"+cursor.getString(11));
+            i++;
+        }
+
 
     }
 
@@ -208,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 問題をデータベースからランダムでとってきて各種配列に格納
+     *
      * @return
      */
     private boolean qset() {
