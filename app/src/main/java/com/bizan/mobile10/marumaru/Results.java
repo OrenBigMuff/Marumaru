@@ -26,7 +26,6 @@ public class Results extends AppCompatActivity {
 
     private Button mBtnFluke;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
