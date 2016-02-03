@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
     //hhideyyuki//
     //ブランチ
     private static final int QNUM = 10;     //1サイクルの出題数
@@ -143,16 +143,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         txvmazanmon = (TextView) findViewById(R.id.txvmazanmon);
+        //本番は消すデバッグ用
+        txvmazanmon.setOnLongClickListener(this);
         txvmatotal = (TextView) findViewById(R.id.txvmatotal);
         txvmakuriado = (TextView) findViewById(R.id.txvmakuriado);
 
-        int countallrow = dbC.countAllRow();
-        int countzanmon = dbC.countZanmon();
-        txvmatotal.setText(String.valueOf(countallrow));
-        txvmazanmon.setText(String.valueOf(countzanmon));
 
-        float temp = 100-((countzanmon / (float)countallrow) * 100);
-        txvmakuriado.setText(String.format("%.1f%%", temp));
 
         long endTime = System.currentTimeMillis();
         Log.e("time", (endTime - startTime) + "");
@@ -171,6 +167,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
         }
+
+
+        int countallrow = dbC.countAllRow();
+        int countzanmon = dbC.countZanmon();
+        txvmatotal.setText(String.valueOf(countallrow));
+        txvmazanmon.setText(String.valueOf(countzanmon));
+
+        float temp = 100-((countzanmon / (float)countallrow) * 100);
+        txvmakuriado.setText(String.format("%.1f%%", temp));
 
     }
 
@@ -229,5 +234,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         sound.releaseSE();
         dbC.closeDB();
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        Intent intent = new Intent(this, Clear.class);
+        startActivity(intent);
+        return true;
     }
 }
