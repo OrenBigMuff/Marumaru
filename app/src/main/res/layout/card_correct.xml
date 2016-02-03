@@ -35,7 +35,8 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="17dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                style="@style/fontSize_Normal" />
 
             <TextView
                 android:id="@+id/txvCcQuestion"
@@ -45,7 +46,8 @@
                 android:text="単語"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="30dp"
-                android:layout_alignLeft="@+id/txvCcNumber" />
+                android:layout_alignLeft="@+id/txvCcNumber"
+                style="@style/fontSize_Big" />
 
             <TextView
                 android:id="@+id/txvCcAnswer"
@@ -55,7 +57,8 @@
                 android:text="意味"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20dp"
-                android:layout_alignLeft="@+id/txvCcNumber" />
+                android:layout_alignLeft="@+id/txvCcNumber"
+                style="@style/fontSize_Normal" />
 
             <ImageView
                 android:layout_width="60sp"
@@ -71,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_alignParentLeft="false"
-                android:layout_below="@+id/txvCcQuestion"
+                android:layout_below="@+id/txvCcAnswer"
                 android:layout_marginTop="10dp"
                 android:text="@string/magure_button"
                 android:layout_centerHorizontal="true"
