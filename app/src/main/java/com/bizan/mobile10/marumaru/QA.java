@@ -126,7 +126,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
             volumeButton.setBackgroundResource(R.drawable.marumaru_sound_off);
         }
 
-        //LinearKayoutをウェジェットに登録
+        //LinearLayoutをウェジェットに登録
         animeL = (LinearLayout) findViewById(R.id.animationL);
 
 
