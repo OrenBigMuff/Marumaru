@@ -23,7 +23,7 @@ public class Commentary extends AppCompatActivity {
         cardLinear.removeAllViews();
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.test_card, null);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_commentary, null);
         CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
         TextView textBox = (TextView) linearLayout.findViewById(R.id.textBox);
         textBox.setText("このアプリを使う上での注意点。なんとかかんとか" +
