@@ -29,18 +29,19 @@
                 style="@style/yellow_back" />
 
         </LinearLayout>
-        <Button
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:id="@+id/volumeBtn2"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
-            android:layout_marginTop="5dp" android:layout_marginRight="5dp"
-            android:layout_gravity="right"
-            />
 
     </FrameLayout>
+
+    <Button
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:id="@+id/volumeBtn2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
+        android:layout_marginTop="5dp" android:layout_marginRight="5dp"
+        android:layout_gravity="right"
+        />
 
     <FrameLayout
         android:id="@+id/FrameL2"
@@ -51,7 +52,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_above="@+id/FrameL3"
-        android:layout_below="@+id/frameL1">
+        android:layout_below="@+id/volumeBtn2">
 
         <RelativeLayout
             android:layout_width="match_parent"
