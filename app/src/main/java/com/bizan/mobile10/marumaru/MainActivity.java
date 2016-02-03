@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //登録が一軒もなければサンプルを登録バージョンで管理されるべき
         if (!dbC.isCheckDBQA()) {
-            toast("DB登録");
+            //toast("DB登録");
             if (dbC.firstInsert(this) == -1) {
                 toast("DB登録できませんでした。");
             }
