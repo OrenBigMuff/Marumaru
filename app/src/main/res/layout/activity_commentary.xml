@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="このアプリの説明だ！ありがたく聞け！"
-        android:id="@+id/textView"
-        android:textSize="17dp" />
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        style="@style/button_answer"
+        android:id="@+id/L1"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/button">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="～3秒で○○～アプリ説明"
+            android:id="@+id/textView"
+            style="@style/fontSize_Normal"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:id="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
         android:layout_marginTop="5dp" android:layout_marginRight="5dp"
-        android:layout_gravity="right"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:id="@+id/scrollView"
         android:fillViewport="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button"
+        android:layout_above="@+id/L2">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -38,12 +52,35 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TOP画面"
-        android:id="@+id/button2"
-        android:layout_gravity="center_horizontal"
-        style="@style/button_start" />
+        android:layout_alignParentBottom="true"
+        android:id="@+id/L2"
+        android:layout_marginBottom="5dp">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:text="TOP画面"
+            android:id="@+id/button2"
+            android:layout_gravity="center_horizontal"
+            style="@style/button_start"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</RelativeLayout>
