@@ -21,7 +21,6 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
             android:layout_marginTop="5dp" android:layout_marginRight="5dp"/>
-            android:background="@drawable/marumaru_sound_on" />
 
     </RelativeLayout>
 
@@ -33,9 +32,9 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="#e5e5e5">
+            style="@style/yellow_back">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:id="@+id/txvmazanmon"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="right"
+                    style="@style/fontSize_Normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,7 +78,8 @@
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:id="@+id/txvmatotal"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="right"
+                    style="@style/fontSize_Normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,19 +94,20 @@
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:id="@+id/txvmakuriado"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="right"
+                    style="@style/fontSize_Normal" />
 
             </GridLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_button"
-                android:id="@+id/btnmastart"
-                android:layout_gravity="center"
-                style="@style/button_start" />
-
         </LinearLayout>
+
+        <Button
+            android:layout_width="240dp"
+            android:layout_height="96dp"
+            android:text="@string/start_button"
+            android:id="@+id/btnmastart"
+            android:layout_gravity="center"
+            style="@style/button_start" />
 
     </LinearLayout>
 
