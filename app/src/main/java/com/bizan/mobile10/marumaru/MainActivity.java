@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!qset()) {
             Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
+            MainActivity.this.finish();
         }
         if (pref.readConfig("soundON", true)) {
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
