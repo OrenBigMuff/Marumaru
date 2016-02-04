@@ -155,7 +155,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
 
         init();
         AnimationLinear();
-        setOuestion();
+        setQuestion();
         animStart();
 
         MainActivity.setBtnF(true);
@@ -192,7 +192,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     /**
      * 問題文、選択肢セット
      */
-    private void setOuestion() {
+    private void setQuestion() {
         //一時保存用の配列
         int[] arrayNum = new int[3];
         //-1で初期化　のちに0-2が入るのでそれ以外の数で初期化
@@ -332,7 +332,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                     public void run() {
                         btnF = true;
                         AnimationLinear();
-                        setOuestion();
+                        setQuestion();
                         animStart();
                     }
                 });
