@@ -1,5 +1,6 @@
 package com.bizan.mobile10.marumaru;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -15,6 +17,7 @@ public class Commentary extends AppCompatActivity {
     CheckBox checkBox;
     Sound sound;
     PreferenceC pref;
+    private int magureCheck = 1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +26,44 @@ public class Commentary extends AppCompatActivity {
         cardLinear.removeAllViews();
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.test_card, null);
-        CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_commentary, null);
+        final CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
         cardView.setTag(0);
         cardLinear.addView(linearLayout, 0);
 
+        //マグレボタン
+        final Button btnMgure = (Button) cardView.findViewById(R.id.btnMgure);
+        final RelativeLayout rtlCommentaryLayout = (RelativeLayout) findViewById(R.id.rtlCommentaryLayout);
+        btnMgure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (magureCheck == 1) {
+                    //スナックバーを表示させる
+                    Snackbar.make(rtlCommentaryLayout,
+                            "マグレボタンを出題停止ボタンへ変更します",
+                            Snackbar.LENGTH_SHORT).show();
+
+                    //出題フラグを｢出題する｣へ
+                    magureCheck = 0;
+
+                    //ボタンのテキストを｢出題停止｣へ変更
+                    btnMgure.setText(R.string.questionstop_button);
+                } else if (magureCheck == 0) {
+                    //スナックバーを表示させる
+                    Snackbar.make(rtlCommentaryLayout,
+                            "出題停止ボタンをマグレボタンへ変更します",
+                            Snackbar.LENGTH_SHORT).show();
+
+                    //出題フラグを｢出題しない｣へ
+                    magureCheck = 1;
+
+                    //ボタンのテキストを｢マグレ｣へ
+                    btnMgure.setText(R.string.magure_button);
+                }
+            }
+        });
+
+        //checkbox
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
