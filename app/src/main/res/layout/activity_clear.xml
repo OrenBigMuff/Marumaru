@@ -33,7 +33,10 @@
             android:id="@+id/btnInit" android:layout_gravity="bottom" android:alpha="0.8"
             style="@style/button_start"
             android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_margin="3dp"/>
+            android:elevation="4dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp"/>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

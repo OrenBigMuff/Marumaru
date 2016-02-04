@@ -207,6 +207,7 @@ public class Clear extends AppCompatActivity
         super.onDestroy();
         dbC.closeDB();
         mp.release();
+        Clear.this.finish();
     }
 
     @Override

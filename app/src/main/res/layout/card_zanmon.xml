@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:elevation="2dp" android:gravity="center_horizontal"
-            android:translationZ="6dp">
+            android:elevation="2dp" android:gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/zanmonTitle"

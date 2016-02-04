@@ -22,7 +22,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="30dp"
             android:text="New Text"
             android:id="@+id/txvArResult"
             android:gravity="center"
@@ -35,7 +35,7 @@
             android:id="@+id/scrollView"
             android:layout_below="@+id/txvArResult"
             android:layout_above="@+id/btnArReturn"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="2dp">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -49,10 +49,12 @@
             android:layout_height="64dp"
             android:text="@string/return_top"
             android:id="@+id/btnArReturn"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:elevation="6dp"
             style="@style/button_start"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"
             android:layout_gravity="center_horizontal" />
     </RelativeLayout>
 
