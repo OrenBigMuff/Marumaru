@@ -82,6 +82,13 @@ public class Commentary extends AppCompatActivity {
 
 
         final Button button = (Button) findViewById(R.id.button);
+        if (sound.isSoundON()) {
+            button.setBackgroundResource(R.drawable.marumaru_sound_on);
+            //iconChenge
+        } else {
+            button.setBackgroundResource(R.drawable.marumaru_sound_off);
+            //iconChenge
+        }
         button.setOnClickListener(new View.OnClickListener() {
             //音を消す
             @Override
