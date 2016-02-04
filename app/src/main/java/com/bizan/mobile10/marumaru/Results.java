@@ -19,26 +19,17 @@ public class Results extends AppCompatActivity {
     private static MainActivity mainActivity = new MainActivity();
     private static QA qA = new QA();
 
-    private int[] mId = mainActivity.getId();                       //問題のID
-    private int[] mCorrection = qA.getCorrection();                 //問題の正誤
-    private String[] mQuestion = mainActivity.getQuestion();        //問題
-    private String[] mAnswer = mainActivity.getCorrectAnswer();     //答え
+    private int[] mId = mainActivity.getId();
+    private int[] mCorrection = qA.getCorrection();
+    private String[] mQuestion = mainActivity.getQuestion();
+    private String[] mAnswer = mainActivity.getCorrectAnswer();
+
+    private Button mBtnFluke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-
-        if (mCorrection.length!=10) {
-            //正誤の要素数が10個じゃなければスルー
-            return;
-        }else if (mQuestion.length!=10) {
-            //問題の要素数が10個じゃなければスルー
-            return;
-        }else if (mAnswer.length!=10) {
-            //答えの要素数が10個じゃなければスルー
-            return;
-        }
 
         //10問中の正解数を表示させる
         int correct = 0;
@@ -54,9 +45,8 @@ public class Results extends AppCompatActivity {
         LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.lilArCardLiner);
         cardLinear.removeAllViews();
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < 10; i++) {
-            final LinearLayout snackbarLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
             //正解の場合
             if (mCorrection[i]==1) {
@@ -66,7 +56,7 @@ public class Results extends AppCompatActivity {
 
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCcNumber);
-                txvNumber.setText("Question:" + (i+1));
+                txvNumber.setText("QuestionNo:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCcQuestion);
@@ -79,15 +69,16 @@ public class Results extends AppCompatActivity {
                 cardLinear.addView(linearLayout, i);
 
                 //マグレボタン
-                final Button mBtnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
+                mBtnFluke = (Button) cardView.findViewById(R.id.btnCcFluke);
                 mBtnFluke.setTag(i);
                 mBtnFluke.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
                             //スナックバーを表示させる
-                            Snackbar.make(snackbarLayout,
-                                    "Question:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
+                            Snackbar.make(mLinearLayout,
+                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
                                     Snackbar.LENGTH_SHORT).show();
 
                             //出題フラグを｢出題する｣へ
@@ -98,8 +89,9 @@ public class Results extends AppCompatActivity {
                         }
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
                             //スナックバーを表示させる
-                            Snackbar.make(snackbarLayout,
-                                    "Question:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
+                            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
+                            Snackbar.make(mLinearLayout,
+                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
                                     Snackbar.LENGTH_SHORT).show();
 
                             //出題フラグを｢出題しない｣へ
@@ -116,9 +108,11 @@ public class Results extends AppCompatActivity {
             else if (mCorrection[i]==0) {
                 LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_mistake, null);
 
+                CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCmCard);
+
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCmNumber);
-                txvNumber.setText("Question:" + (i+1));
+                txvNumber.setText("QuestionNo:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCmQuestion);
@@ -137,7 +131,8 @@ public class Results extends AppCompatActivity {
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Results.this.finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -145,14 +140,6 @@ public class Results extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (mId.length!=10) {
-            //IDの要素数が10個じゃなければDBに書き込まずスルー
-            return;
-        }else if (mCorrection.length!=10) {
-            //正誤の要素数が10個じゃなければDBに書き込まずスルー
-            return;
-        }
 
         //Databaseへ出題フラグの登録
         DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
