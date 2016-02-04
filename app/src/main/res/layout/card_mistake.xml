@@ -15,7 +15,7 @@
         android:layout_marginTop="5dp"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp"
-        style="@style/CardViewStyle">
+        style="@style/CardViewConglaStyle">
 
         <!-- カードに載せる情報 -->
 

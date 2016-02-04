@@ -73,7 +73,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     private Handler handler;
 
     //画面の枠のコントロール
-    private int waku;
+    private int waku = 4;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -155,7 +155,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
 
         init();
         AnimationLinear();
-        setOuestion();
+        setQuestion();
         animStart();
 
         MainActivity.setBtnF(true);
@@ -192,7 +192,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     /**
      * 問題文、選択肢セット
      */
-    private void setOuestion() {
+    private void setQuestion() {
         //一時保存用の配列
         int[] arrayNum = new int[3];
         //-1で初期化　のちに0-2が入るのでそれ以外の数で初期化
@@ -248,15 +248,6 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         if (btnF && v != volumeButton) {
             btnF = false;
 
-//            if (v == btnQA[0]) {
-//                imvStroke[0].setVisibility(View.VISIBLE);
-//            } else if (v == btnQA[1]) {
-//                imvStroke[1].setVisibility(View.VISIBLE);
-//            } else if (v == btnQA[2]) {
-//                imvStroke[2].setVisibility(View.VISIBLE);
-//            } else if (v == btnQA[3]) {
-//                imvStroke[3].setVisibility(View.VISIBLE);
-//            }
 
             if (v == btnQA[0]) {
                 waku = 0;
@@ -267,7 +258,6 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
             } else if (v == btnQA[3]) {
                 waku = 3;
             }
-
 
 
             if (v.getTag().equals("true")) {
@@ -318,7 +308,10 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                     @Override
                     public void run() {
                         if(!btnF) {
-                            imvStroke[waku].setVisibility(View.VISIBLE);
+                            if(waku != 4) {
+                                imvStroke[waku].setVisibility(View.VISIBLE);
+                                waku = 4;
+                            }
                         }
                         imageChange();
                         if (animatorSet != null) {
@@ -339,7 +332,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                     public void run() {
                         btnF = true;
                         AnimationLinear();
-                        setOuestion();
+                        setQuestion();
                         animStart();
                     }
                 });
