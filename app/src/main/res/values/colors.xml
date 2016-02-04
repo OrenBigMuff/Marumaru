@@ -3,20 +3,23 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="P1BackgroundColor1">#ffffff</color>      //P1バックグラウンドカラー
-    <color name="P1ScoreBackColor">#ffff00</color>        //P1スコアのバックグラウンドカラー
-    <color name="P1ScoreTextColor">#808080</color>        //P1スコアのテキストカラー
-    <color name="P1StartButtonBackColor">#ec6800</color>  //P1スタートボタンバックカラー
+
+    <!-- バックグラウンド -->
+    <color name="P1BackgroundColor1">#ffffff</color>            P1バックグラウンドカラー
+    <color name="P1ScoreBackColor">#fef263</color>              P1スコアのバックグラウンドカラー
+    <color name="P1StartButtonBackColor">#ec6800</color>        P1スタートボタンバックカラー
     <color name="P1StartButtonPressedColor">#ec8800</color>
-    <color name="P1StartButtonTextColor">#ffffff</color>  //P1スタートボタンテキストカラー
-    <color name="P1SoundButtonBackColor">#0000ff</color>  //P1サウンドボタンバックグラウンドカラー
-    <color name="P1SoundButtonTextColor">#ffffff</color>  //P1サウンドボタンテキストカラー
-    
-    <color name="P2AnswerButtonBackColor">#ffff00</color>  //アンサーボタンバックグラウンドカラー
-    <color name="P2AnswerButtonTextColor">#ffffff</color>  //アンサーボタンテキストカラー
-    <color name="P2AnswerButtonStrokeColor">#ff0000</color>//アンサーボタン外枠カラー
+    <color name="P1SoundButtonBackColor">#0000ff</color>        P1サウンドボタンバックグラウンドカラー
+    <color name="P2AnswerButtonBackColor">#fef263</color>       アンサーボタンバックグラウンドカラー
+    <color name="P2AnswerButtonStrokeColor">#ff0000</color>     アンサーボタン外枠カラー
+    <color name="P5ConglacheColor">#7ecef4</color>              コングラッチェカラー
 
-    <color name="P5ConglacheColor">#7ecef4</color>//コングラッチェカラー
-
+    <!-- テキスト -->
     <color name="TextColor">#ff8000</color>
+    <color name="P1ScoreTextColor">#808080</color>              P1スコアのテキストカラー
+    <color name="P1StartButtonTextColor">#ffffff</color>        P1スタートボタンテキストカラー
+    <color name="P1SoundButtonTextColor">#ffffff</color>        P1サウンドボタンテキストカラー
+    <color name="P2AnswerButtonTextColor">#ffffff</color>       アンサーボタンテキストカラー
+    <color name="AnswerButtonTextColor">#333333</color>         アンサーボタンテキストカラー
+    <color name="QuestionTextColor">#002bff</color>             クエスチョンテキストカラー
 </resources>

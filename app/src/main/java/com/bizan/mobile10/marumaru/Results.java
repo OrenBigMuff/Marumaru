@@ -29,6 +29,17 @@ public class Results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        if (mCorrection.length!=10) {
+            //正誤の要素数が10個じゃなければスルー
+            return;
+        }else if (mQuestion.length!=10) {
+            //問題の要素数が10個じゃなければスルー
+            return;
+        }else if (mAnswer.length!=10) {
+            //答えの要素数が10個じゃなければスルー
+            return;
+        }
+
         //10問中の正解数を表示させる
         int correct = 0;
         for (int i = 0; i < 10; i++) {
@@ -43,19 +54,19 @@ public class Results extends AppCompatActivity {
         LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.lilArCardLiner);
         cardLinear.removeAllViews();
 
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < 10; i++) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             final LinearLayout snackbarLayout = (LinearLayout) findViewById(R.id.lilArlinearLayout);
 
             //正解の場合
             if (mCorrection[i]==1) {
-                final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_correct, null);
+                LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_correct, null);
 
-                final CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCcCard);
+                CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCcCard);
 
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCcNumber);
-                txvNumber.setText("QuestionNo:" + (i+1));
+                txvNumber.setText("Question:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCcQuestion);
@@ -76,7 +87,7 @@ public class Results extends AppCompatActivity {
                         if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==1) {
                             //スナックバーを表示させる
                             Snackbar.make(snackbarLayout,
-                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
+                                    "Question:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を再度出題します",
                                     Snackbar.LENGTH_SHORT).show();
 
                             //出題フラグを｢出題する｣へ
@@ -88,7 +99,7 @@ public class Results extends AppCompatActivity {
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
                             //スナックバーを表示させる
                             Snackbar.make(snackbarLayout,
-                                    "QuestionNo:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
+                                    "Question:" + (Integer.parseInt(String.valueOf(v.getTag())) + 1) + " を出題停止にします",
                                     Snackbar.LENGTH_SHORT).show();
 
                             //出題フラグを｢出題しない｣へ
@@ -105,11 +116,9 @@ public class Results extends AppCompatActivity {
             else if (mCorrection[i]==0) {
                 LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_mistake, null);
 
-                CardView cardView = (CardView) linearLayout.findViewById(R.id.cdvCmCard);
-
                 //問題番号
                 TextView txvNumber = (TextView) linearLayout.findViewById(R.id.txvCmNumber);
-                txvNumber.setText("QuestionNo:" + (i+1));
+                txvNumber.setText("Question:" + (i+1));
 
                 //単語
                 TextView txvQuestion = (TextView) linearLayout.findViewById(R.id.txvCmQuestion);
