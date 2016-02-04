@@ -114,6 +114,13 @@ public class Clear extends AppCompatActivity
 
                 //スナックバーアクションを割り当てたいときは以下を追加　←最終的に消す
             /*cardView2.setTag(i);
+                int j = i + 1;
+                zanmonTitle.setText("憶えていない単語 その" + j);
+                zanmonWord.setText(zanmon[i].question);
+                zanmonMean.setText(zanmon[i].mean);
+
+                //スナックバーアクションを割り当てたいときは以下を追加 ←最終的に消す
+            cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
