@@ -39,4 +39,7 @@
     <style name="CardViewStyle" parent="CardView">
         <item name="cardBackgroundColor">@color/P2AnswerButtonBackColor</item>
     </style>
+    <style name="Linearr">
+        <item name="android:background">@drawable/linearr</item>
+    </style>
 </resources>
