@@ -211,19 +211,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, QA.class);
                 startActivity(intent);
             }
-            if (v == volButton) {
-                if (sound.isSoundON()) {
-                    Sound.setSoundON(false);
-                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-                    pref.writeConfig("soundON", false);
-                } else {
-                    Sound.setSoundON(true);
-                    volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-                    pref.writeConfig("soundON", true);
-                }
-                sound.playSE();
-            }
 
+        }
+        if (v == volButton) {
+            if (sound.isSoundON()) {
+                Sound.setSoundON(false);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                pref.writeConfig("soundON", false);
+            } else {
+                Sound.setSoundON(true);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+                pref.writeConfig("soundON", true);
+            }
+            sound.playSE();
+            btnF = true;
         }
     }
 
