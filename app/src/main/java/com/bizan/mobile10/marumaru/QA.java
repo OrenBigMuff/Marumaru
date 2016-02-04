@@ -370,6 +370,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         soundHazure.releaseSE();
         //いきなりResultsに移動する
         count = COUNT_Q * 2;
+        QA.this.finish();
     }
 
     /**

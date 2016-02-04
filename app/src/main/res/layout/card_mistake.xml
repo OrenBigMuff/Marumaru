@@ -29,23 +29,21 @@
                 android:id="@+id/txvCmNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="問題1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20dp"
                 android:layout_marginLeft="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="10dp" />
+                style="@style/fontSize_Normal"
+                android:layout_alignBottom="@+id/imvCmRW" />
 
             <TextView
                 android:id="@+id/txvCmQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txvCmNumber"
+                android:layout_below="@+id/imvCmRW"
                 android:text="単語"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="30dp"
-                android:layout_alignLeft="@+id/txvCmNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber"
+                style="@style/fontSize_Big" />
 
             <TextView
                 android:id="@+id/txvCmAnswer"
@@ -54,17 +52,20 @@
                 android:layout_below="@+id/txvCmQuestion"
                 android:text="意味"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20dp"
-                android:layout_alignLeft="@+id/txvCmNumber" />
+                android:layout_alignLeft="@+id/txvCmNumber"
+                style="@style/fontSize_Normal"
+                android:layout_marginBottom="10dp" />
 
             <ImageView
                 android:layout_width="60sp"
                 android:layout_height="60sp"
                 android:id="@+id/imvCmRW"
-                android:layout_alignTop="@+id/txvCmNumber"
+                android:background="@drawable/marumaru_mistake"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginRight="17dp"
-                android:background="@drawable/marumaru_mistake" />
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

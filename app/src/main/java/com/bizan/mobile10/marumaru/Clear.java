@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,8 +25,10 @@ import java.io.IOException;
 public class Clear extends AppCompatActivity
         implements OnClickListener {
 
-    MediaPlayer mp =MediaPlayer.create(this, R.raw.ifudodo);
+    MediaPlayer mp;
+    private PreferenceC pref;               //プリファレンス
 
+    Snackbar snackbar;              //スナックバー
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
@@ -41,18 +45,51 @@ public class Clear extends AppCompatActivity
 //    private final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
     private final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
 
+    private Button volButton;               //サウンドボタン
+    private Button btnInit;                 //Initボタン
+
+    private CoordinatorLayout mCoodinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
-        try {
-            mp.prepare();
-        } catch (IOException e) {
+        mCoodinatorLayout = (CoordinatorLayout)findViewById(R.id.cdL);
+
+        //コンフィグ使う準備
+        pref = new PreferenceC(this);
+
+
+//BGM読込
+        try
+        {
+            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
+            mp.setLooping(true);
+
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
         }
 
+        volButton = (Button) this.findViewById(R.id.btnmavol_cl);
+        volButton.setOnClickListener(this);
+        btnInit = (Button) this.findViewById(R.id.btnInit);
+        btnInit.setOnClickListener(this);
+
+
+        if(!pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+            mp.pause();
+        }
         mp.start();
+
+
+
 
         //DBから残問数を取得するにはこちら
         numZanmon = dbC.countZanmon();
@@ -73,11 +110,11 @@ public class Clear extends AppCompatActivity
             cardLinear.addView(linearLayout, 0);
 
             //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
-            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
+//            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
 
         }else{
 
-            Zanmon zanmon[] = new Zanmon[numZanmon];
+            final Zanmon zanmon[] = new Zanmon[numZanmon];
 
             //残問配列にDBの値を格納していく・・・tagいらんかったね(笑)
             for(int i=0; i<numZanmon; i++){
@@ -101,62 +138,113 @@ public class Clear extends AppCompatActivity
 
 
             //for文でせっせとCardViewを作っていきます。
-            for (int i = 1; i <= numZanmon; i++) {
+            for (int i = 0; i < numZanmon; i++) {
                 LayoutInflater inflater2 = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 LinearLayout linearLayout2 = (LinearLayout) inflater2.inflate(R.layout.card_zanmon, null);
                 CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
                 zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
                 zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
                 zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
-                zanmonTitle.setText("憶えていない単語 No." + i);
-                zanmonWord.setText(zanmon[i].question);
-                zanmonMean.setText(zanmon[i].mean);
-
-                //スナックバーアクションを割り当てたいときは以下を追加　←最終的に消す
-            /*cardView2.setTag(i);
                 int j = i + 1;
                 zanmonTitle.setText("憶えていない単語 その" + j);
                 zanmonWord.setText(zanmon[i].question);
                 zanmonMean.setText(zanmon[i].mean);
 
                 //スナックバーアクションを割り当てたいときは以下を追加 ←最終的に消す
-            cardView2.setTag(i);
+/*            cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Don't touch me!!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    int x = (int) view.getTag();
+                    String tmp = zanmon[x].mean;
+                    snackbar = Snackbar.make(mCoodinatorLayout, "answer:   " + tmp , Snackbar.LENGTH_INDEFINITE);
+                    TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextColor(Color.rgb(236,104,0));
+                    textView.setTextSize(20);
+//                    snackbar.setActionTextColor(Color.rgb(236,104,0));
+                    snackbar.getView().setBackgroundColor(Color.rgb(126, 206, 244));
+                    snackbar.setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                        }
+                    })
+                            .show();
                 }
             });*/
 
-                cardLinearZanmon.addView(linearLayout2, i-1);     //i=0からにするために　i-1
+                cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
-            //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
-            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", "Init"));
+            LinearLayout blankLayout = new LinearLayout(this);
+//            blankLayout.setBackgroundColor(Color.WHITE);
+            blankLayout.setLayoutParams(new LinearLayout.LayoutParams(MP, 150));
+            cardLinearZanmon.addView(blankLayout);
         }
 
     }
 
     @Override
-    public void onClick(View v) {
-        //ここにイニシャライズの呪文(メソッド)を書き込む
-        Log.v("Button_clr", "onClick");
-        DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
-        dbC.reset();
+    protected void onResume(){
+        super.onResume();
+        if(!pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+            mp.pause();
+        }
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mp.isPlaying()) {
+            mp.pause();
+            pref.writeConfig("soundON", false);
+        } else {
+            pref.writeConfig("soundON", true);
+        }
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        dbC.closeDB();
         mp.release();
-        this.finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btnInit:
+            //ここにイニシャライズの呪文(メソッド)を書き込む
+            Log.v("Button_clr", "onClick");
+            DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
+            dbC.reset();
+            mp.release();
+            this.finish();
+                break;
+            case R.id.btnmavol_cl:
+                if (mp.isPlaying()) {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                    mp.pause();
+                    pref.writeConfig("soundON", false);
+                } else {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+                    mp.start();
+                    pref.writeConfig("soundON", true);
+                }
+                break;
+        }
     }
 
     /**
      * 苦肉の策でボタンを動的に追加する為のメソッドです とりあえずボタンの height = 150dp でご機嫌をうかがってます
      * @param text
-     * @param tag
+     * @param id
      * @return
      */
-    private Button makeButton(String text, String tag) {
+    private Button makeButton(String text, int id) {
         Button button = new Button(this);
         button.setText(text);
-        button.setTag(tag);
+        button.setId(id);
         button.setOnClickListener(this);
         button.setLayoutParams(new LinearLayout.LayoutParams(MP, 150));
         return button;

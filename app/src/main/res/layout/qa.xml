@@ -75,7 +75,8 @@
                 android:layout_alignParentTop="false"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentBottom="false"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:textColor="#002bff" />
         </RelativeLayout>
     </FrameLayout>
 
