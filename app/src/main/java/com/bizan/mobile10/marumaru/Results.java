@@ -159,4 +159,3 @@ public class Results extends AppCompatActivity {
         dbC.updateQuestionFlag(mId, mCorrection);
     }
 }
-
