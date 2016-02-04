@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -16,13 +17,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Clear">
+        <activity android:name=".Clear"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Results">
+        <activity android:name=".Results"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".QA" />
-        <activity android:name=".Commentary" />
+        <activity android:name=".QA"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Commentary"
+            android:screenOrientation="portrait"/>
 
     </application>
 
