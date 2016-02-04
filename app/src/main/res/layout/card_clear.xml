@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         style="@style/CardViewConglaStyle"
         android:elevation="6dp"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground" android:translationZ="6dp">
 
         <!-- カードに載せる情報 -->
 
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            >
+            android:translationZ="6dp">
 
             <TextView
                 android:id="@+id/textBox"
@@ -32,6 +32,7 @@
                 android:layout_marginStart="17dp"
                 android:text="@string/clear_title"
                 style="@style/fontSize_Big"
+                android:textColor="@color/P1StartButtonBackColor"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="26dp" android:layout_marginTop="10dp"
                 />
