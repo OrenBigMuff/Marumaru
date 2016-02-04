@@ -28,11 +28,12 @@ public class Clear extends AppCompatActivity
     MediaPlayer mp;
     private PreferenceC pref;               //プリファレンス
 
+    Snackbar snackbar;              //スナックバー
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
-    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
+//    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
     DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
 
@@ -48,8 +49,6 @@ public class Clear extends AppCompatActivity
     private Button btnInit;                 //Initボタン
 
     private CoordinatorLayout mCoodinatorLayout;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +82,11 @@ public class Clear extends AppCompatActivity
         btnInit.setOnClickListener(this);
 
 
-        if(pref.readConfig("soundON", false)){
+        if(!pref.readConfig("soundON", true)){
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-
-        }else if(pref.readConfig("soundON", true)){
-            mp.start();
+            mp.pause();
         }
+        mp.start();
 
 
 
@@ -146,14 +144,14 @@ public class Clear extends AppCompatActivity
                 CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
                 zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
                 zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
-                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
+//                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
                 int j = i + 1;
                 zanmonTitle.setText("憶えていない単語 その" + j);
                 zanmonWord.setText(zanmon[i].question);
-                zanmonMean.setText(zanmon[i].mean);
+//                zanmonMean.setText(zanmon[i].mean);
 
-                //スナックバーアクションを割り当てたいときは以下を追加 ←最終的に消す
-/*            cardView2.setTag(i);
+                //スナックバーアクションを割り当てたいときは以下を追加
+            cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -173,7 +171,7 @@ public class Clear extends AppCompatActivity
                     })
                             .show();
                 }
-            });*/
+            });
 
                 cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
@@ -188,37 +186,22 @@ public class Clear extends AppCompatActivity
     @Override
     protected void onResume(){
         super.onResume();
-        //BGM読込
-        try
-        {
-            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
-            mp.setLooping(true);
-
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
+        if(!pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+            mp.pause();
         }
-        if(pref.readConfig("soundON", true)){
-            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-            mp.start();
-        }else if(pref.readConfig("soundON", false)){
-            mp.start();
-        }
+        mp.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mp.isPlaying()) {
-            mp.pause();
-            pref.writeConfig("soundON", true);
-        } else if(!mp.isPlaying()) {
-            pref.writeConfig("soundON", false);
-        }
+//        if (mp.isPlaying()) {
+//            mp.pause();
+//            pref.writeConfig("soundON", false);
+//        } else {
+//            pref.writeConfig("soundON", true);
+//        }
     }
 
     public void onDestroy() {
@@ -236,14 +219,14 @@ public class Clear extends AppCompatActivity
             DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
             dbC.reset();
             mp.release();
-            this.finish();
+            Clear.this.finish();
                 break;
             case R.id.btnmavol_cl:
                 if (mp.isPlaying()) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                     pref.writeConfig("soundON", false);
-                } else if(!mp.isPlaying()) {
+                } else {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
@@ -278,4 +261,44 @@ public class Clear extends AppCompatActivity
             this.mean = mean;
         }
     }
+
+/*    //DBからの読み込みメソッド
+    private String readDB() throws Exception{
+        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
+        if(c.getCount() == 0)throw new Exception();
+        c.moveToFirst();
+        String str = c.getString(1);
+        c.close();
+        return str;
+    }
+
+    private int readZanmon() throws Exception{
+        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
+        if(c.getCount() == 0)throw new Exception();
+        c.moveToFirst();
+        int num_zan = c.getCount();
+        c.close();
+        return num_zan;
+    }*/
+
+/*
+    *//**
+     * 仮初めのDBHelper
+     *//*
+    private class DBHelper extends SQLiteOpenHelper{
+        //コンストラクタ
+        public DBHelper(Context context){
+            super(context, DB_NAME, null, DB_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }*/
 }

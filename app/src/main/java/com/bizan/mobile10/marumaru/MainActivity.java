@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pref = new PreferenceC(this);
 
         //サウンド設定
-        sound = new Sound(this, R.raw.see);
+        sound = new Sound(this, R.raw.click1);
         sound.setSoundON(pref.readConfig("soundON", true));
 
 
