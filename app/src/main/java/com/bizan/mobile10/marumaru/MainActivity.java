@@ -33,6 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //テーブル名
     private static final String[] DB_TABLE = {"Question_Answer"};
 
+
+
+    private static boolean btnF = true;      //ボタンフラッグ
+
+    public static void setBtnF(boolean btnF) {
+        MainActivity.btnF = btnF;
+    }
+
     public static String getDB_TABLE() {
         return DB_TABLE[0];
     }
@@ -161,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!qset()) {
             Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
-            MainActivity.this.finish();
         }
         if (pref.readConfig("soundON", true)) {
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
@@ -198,21 +205,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v == startButton) {
-            Intent intent = new Intent(this, QA.class);
-            startActivity(intent);
-        }
-        if (v == volButton) {
-            if (sound.isSoundON()) {
-                Sound.setSoundON(false);
-                volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-                pref.writeConfig("soundON", false);
-            } else {
-                Sound.setSoundON(true);
-                volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-                pref.writeConfig("soundON", true);
+        if(btnF) {
+            btnF = false;
+            Log.e("btn", "bbbbbbttttttttttnnnnnnnnnnn");
+            if (v == startButton && !btnF ) {
+                Intent intent = new Intent(this, QA.class);
+                startActivity(intent);
             }
-            sound.playSE();
+            if (v == volButton) {
+                if (sound.isSoundON()) {
+                    Sound.setSoundON(false);
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                    pref.writeConfig("soundON", false);
+                } else {
+                    Sound.setSoundON(true);
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+                    pref.writeConfig("soundON", true);
+                }
+                sound.playSE();
+            }
+
         }
     }
 

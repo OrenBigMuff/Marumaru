@@ -154,6 +154,8 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
         AnimationLinear();
         setOuestion();
         animStart();
+
+        MainActivity.setBtnF(true);
     }
 
     @Override
