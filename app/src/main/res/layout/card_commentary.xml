@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/magure_button"
-                android:id="@+id/button3"
+                android:id="@+id/btnMgure"
                 android:layout_marginBottom="12dp"
                 android:layout_below="@+id/textView3"
                 style="@style/button_start"
@@ -61,7 +61,7 @@
                 android:text="@string/commentary_text3"
                 android:id="@+id/textView5"
                 style="@style/fontSize_Normal"
-                android:layout_below="@+id/button3"
+                android:layout_below="@+id/btnMgure"
                 android:layout_alignLeft="@+id/textBox"
                 android:layout_marginBottom="12dp" />
 
