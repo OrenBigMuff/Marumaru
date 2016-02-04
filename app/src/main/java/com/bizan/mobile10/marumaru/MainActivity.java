@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(btnF) {
             btnF = false;
-            Log.e("btn", "bbbbbbttttttttttnnnnnnnnnnn");
             if (v == startButton && !btnF ) {
                 Intent intent = new Intent(this, QA.class);
                 startActivity(intent);

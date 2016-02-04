@@ -72,6 +72,9 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     private AnimatorSet animatorSet;
     private Handler handler;
 
+    //画面の枠のコントロール
+    private int waku;
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -244,15 +247,28 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     public void onClick(View v) {
         if (btnF && v != volumeButton) {
             btnF = false;
+
+//            if (v == btnQA[0]) {
+//                imvStroke[0].setVisibility(View.VISIBLE);
+//            } else if (v == btnQA[1]) {
+//                imvStroke[1].setVisibility(View.VISIBLE);
+//            } else if (v == btnQA[2]) {
+//                imvStroke[2].setVisibility(View.VISIBLE);
+//            } else if (v == btnQA[3]) {
+//                imvStroke[3].setVisibility(View.VISIBLE);
+//            }
+
             if (v == btnQA[0]) {
-                imvStroke[0].setVisibility(View.VISIBLE);
+                waku = 0;
             } else if (v == btnQA[1]) {
-                imvStroke[1].setVisibility(View.VISIBLE);
+                waku = 1;
             } else if (v == btnQA[2]) {
-                imvStroke[2].setVisibility(View.VISIBLE);
+                waku = 2;
             } else if (v == btnQA[3]) {
-                imvStroke[3].setVisibility(View.VISIBLE);
+                waku = 3;
             }
+
+
 
             if (v.getTag().equals("true")) {
                 correctionF = 1;
@@ -301,6 +317,9 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        if(!btnF) {
+                            imvStroke[waku].setVisibility(View.VISIBLE);
+                        }
                         imageChange();
                         if (animatorSet != null) {
                             animatorSet.cancel();
@@ -330,13 +349,13 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
     }
 
     private void imageChange() {
-        for (int i = 0; i < 4; i++) {
-            if (btnQA[i].getTag().equals("true")) {
-                imvMaru[i].setVisibility(View.VISIBLE);
-            } else if (btnQA[i].getTag().equals("false")) {
-                imvBatu[i].setVisibility(View.VISIBLE);
+            for (int i = 0; i < 4; i++) {
+                if (btnQA[i].getTag().equals("true")) {
+                    imvMaru[i].setVisibility(View.VISIBLE);
+                } else if (btnQA[i].getTag().equals("false")) {
+                    imvBatu[i].setVisibility(View.VISIBLE);
+                }
             }
-        }
     }
 
     //効果音に関するものは全て開放
