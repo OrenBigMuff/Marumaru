@@ -29,14 +29,11 @@
                 android:id="@+id/txvCcNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="問題1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20dp"
                 android:layout_marginLeft="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="10dp"
-                style="@style/fontSize_Normal" />
+                style="@style/fontSize_Normal"
+                android:layout_alignBottom="@+id/imvCcRW" />
 
             <TextView
                 android:id="@+id/txvCcQuestion"
@@ -45,7 +42,6 @@
                 android:layout_below="@+id/txvCcNumber"
                 android:text="単語"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="30dp"
                 android:layout_alignLeft="@+id/txvCcNumber"
                 style="@style/fontSize_Big" />
 
@@ -56,7 +52,6 @@
                 android:layout_below="@+id/txvCcQuestion"
                 android:text="意味"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20dp"
                 android:layout_alignLeft="@+id/txvCcNumber"
                 style="@style/fontSize_Normal" />
 
@@ -64,22 +59,23 @@
                 android:layout_width="60sp"
                 android:layout_height="60sp"
                 android:id="@+id/imvCcRW"
-                android:layout_alignTop="@+id/txvCcNumber"
+                android:background="@drawable/marumaru_correct"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/marumaru_correct" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="17dp" />
 
             <Button
                 android:id="@+id/btnCcFluke"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentLeft="false"
+                android:layout_height="50dp"
+                android:text="@string/magure_button"
+                style="@style/button_start"
                 android:layout_below="@+id/txvCcAnswer"
                 android:layout_marginTop="10dp"
-                android:text="@string/magure_button"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                style="@style/button_start" />
+                android:layout_alignRight="@+id/imvCcRW" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
