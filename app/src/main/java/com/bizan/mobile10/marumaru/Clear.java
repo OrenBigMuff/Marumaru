@@ -27,16 +27,14 @@ public class Clear extends AppCompatActivity
 
     MediaPlayer mp;
     private PreferenceC pref;               //プリファレンス
-
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
-
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
     TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
+    //DB
     DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
-
-    //残問の配列（受け）
+    //残問の配列（DB受け）
     String zamWord[] = MainActivity.getQuestion();
     String zamMean[] = MainActivity.getCorrectAnswer();
 
@@ -58,6 +56,11 @@ public class Clear extends AppCompatActivity
 
         mCoodinatorLayout = (CoordinatorLayout)findViewById(R.id.cdL);
 
+        volButton = (Button) this.findViewById(R.id.btnmavol_cl);
+        volButton.setOnClickListener(this);
+        btnInit = (Button) this.findViewById(R.id.btnInit);
+        btnInit.setOnClickListener(this);
+
         //コンフィグ使う準備
         pref = new PreferenceC(this);
 
@@ -74,21 +77,17 @@ public class Clear extends AppCompatActivity
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         }
 
-        volButton = (Button) this.findViewById(R.id.btnmavol_cl);
-        volButton.setOnClickListener(this);
-        btnInit = (Button) this.findViewById(R.id.btnInit);
-        btnInit.setOnClickListener(this);
 
-
-        if(pref.readConfig("soundON", false)){
+        if(pref.readConfig("soundON", true)){
+            Log.v("readConfig", String.valueOf(pref.readConfig("soundON", true)));
+            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
+            mp.start();
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+        }else
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
 
-        }else if(pref.readConfig("soundON", true)){
-            mp.start();
-        }
 
 
 
@@ -204,11 +203,11 @@ public class Clear extends AppCompatActivity
         }
         if(pref.readConfig("soundON", true)){
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-            mp.start();
-        }else if(pref.readConfig("soundON", false)){
+
+        }else
             mp.start();
         }
-    }
+
 
     @Override
     protected void onPause() {
@@ -243,10 +242,14 @@ public class Clear extends AppCompatActivity
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                     pref.writeConfig("soundON", false);
-                } else if(!mp.isPlaying()) {
+                } else if(!mp.isPlaying() || pref.readConfig("soundOn",true)) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
+                } else if(!mp.isPlaying() || !pref.readConfig("soundOn",true)) {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                    mp.pause();
+                    pref.writeConfig("soundON", false);
                 }
                 break;
         }
