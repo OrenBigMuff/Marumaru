@@ -9,8 +9,8 @@
     <string name="genzai_kuriado">現在のクリア度</string>
     <string name="test">テスト</string>
     <string name="clear_title">Congratulations！</string>
-    <string name="clear_text">残り出題数が10題を切りました。\nこのゲームはここでクリアとなります。\n以下、あなたがクリアできていない\n不得意な単語となります。\nしっかり勉強して下さいね。</string>
-    <string name="clear_text2">おめでとうございます。\nあなたは全問題をクリアしましたので、このゲームは終了です。\n定着した知識を活かして、\n新たなステージで活躍されることをお祈り致します。</string>
+    <string name="clear_text">残り出題数が10問未満になりました。\nこのゲームはここでクリアとなります。\n以下、あなたがクリアできていない\n不得意な単語となります。\nしっかり勉強して下さいね。</string>
+    <string name="clear_text2">おめでとうございます。\nあなたは全問題をクリアしましたので、このゲームは終了です。\n定着した知識を活かして、\n新たなステージで活躍されることを\nお祈り致します。</string>
     <string name="results_title">Results</string>
     <string name="return_top">TOP画面</string>
     <string name="magure_button">マグレ</string>

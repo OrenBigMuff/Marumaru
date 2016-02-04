@@ -65,7 +65,6 @@ public class Clear extends AppCompatActivity
         //コンフィグ使う準備
         pref = new PreferenceC(this);
 
-
 //BGM読込
         try
         {
@@ -80,11 +79,7 @@ public class Clear extends AppCompatActivity
             e.printStackTrace();
         }
 
-
-
         if(pref.readConfig("soundON", true)){
-            Log.v("readConfig", String.valueOf(pref.readConfig("soundON", true)));
-            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
             mp.start();
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
         }else
@@ -187,40 +182,25 @@ public class Clear extends AppCompatActivity
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-
-        //BGM読込
-        try
-        {
-            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
-            mp.setLooping(true);
-
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-        }
-        if(pref.readConfig("soundON", true)){
+        if (pref.readConfig("soundON", true)) {
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-
-        }else
             mp.start();
         }
+    }
+
 
 
     @Override
-    protected void onPause() {
+    protected void onPause(){
         super.onPause();
-//        if (mp.isPlaying()) {
-//            mp.pause();
-//            pref.writeConfig("soundON", false);
-//        } else {
-//            pref.writeConfig("soundON", true);
-//        }
+        if (mp.isPlaying()) {
+            mp.pause();
+            pref.writeConfig("soundON", true);
+        } else {
+            pref.writeConfig("soundON", false);
+        }
     }
 
     public void onDestroy() {
@@ -247,7 +227,6 @@ public class Clear extends AppCompatActivity
                     pref.writeConfig("soundON", false);
 
                 } else if(!mp.isPlaying() || pref.readConfig("soundOn",true)) {
-
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
@@ -287,43 +266,5 @@ public class Clear extends AppCompatActivity
         }
     }
 
-/*    //DBからの読み込みメソッド
-    private String readDB() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        String str = c.getString(1);
-        c.close();
-        return str;
-    }
 
-    private int readZanmon() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        int num_zan = c.getCount();
-        c.close();
-        return num_zan;
-    }*/
-
-/*
-    *//**
-     * 仮初めのDBHelper
-     *//*
-    private class DBHelper extends SQLiteOpenHelper{
-        //コンストラクタ
-        public DBHelper(Context context){
-            super(context, DB_NAME, null, DB_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
-    }*/
 }
