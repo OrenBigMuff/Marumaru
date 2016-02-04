@@ -23,11 +23,8 @@ public class Commentary extends AppCompatActivity {
         cardLinear.removeAllViews();
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.card_commentary, null);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.test_card, null);
         CardView cardView = (CardView) linearLayout.findViewById(R.id.cardView);
-        TextView textBox = (TextView) linearLayout.findViewById(R.id.textBox);
-        textBox.setText("このアプリを使う上での注意点。なんとかかんとか" +
-                "なんとかかんとかでなんとかである。以上！");
         cardView.setTag(0);
         cardLinear.addView(linearLayout, 0);
 
@@ -48,16 +45,18 @@ public class Commentary extends AppCompatActivity {
         sound = new Sound(this, R.raw.see);
 
 
-        Button button = (Button) findViewById(R.id.button);
+        final Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             //音を消す
             @Override
             public void onClick(View view) {
                 if (sound.isSoundON()) {
                     sound.setSoundON(false);
+                    button.setBackgroundResource(R.drawable.marumaru_sound_off);
                     //iconChenge
                 } else {
                     sound.setSoundON(true);
+                    button.setBackgroundResource(R.drawable.marumaru_sound_on);
                     //iconChenge
                 }
                 pref.writeConfig("soundON", sound.isSoundON());
