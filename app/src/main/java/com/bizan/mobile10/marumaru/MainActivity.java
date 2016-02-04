@@ -205,24 +205,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if (v == volButton) {
+            if (sound.isSoundON()) {
+                Sound.setSoundON(false);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                pref.writeConfig("soundON", false);
+            } else {
+                Sound.setSoundON(true);
+                volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+                pref.writeConfig("soundON", true);
+            }
+            sound.playSE();
+        }
         if(btnF) {
             btnF = false;
             if (v == startButton && !btnF ) {
                 Intent intent = new Intent(this, QA.class);
                 startActivity(intent);
             }
-            if (v == volButton) {
-                if (sound.isSoundON()) {
-                    Sound.setSoundON(false);
-                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-                    pref.writeConfig("soundON", false);
-                } else {
-                    Sound.setSoundON(true);
-                    volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-                    pref.writeConfig("soundON", true);
-                }
-                sound.playSE();
-            }
+
 
         }
     }

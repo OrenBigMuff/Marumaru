@@ -23,7 +23,7 @@ import java.io.IOException;
 public class Clear extends AppCompatActivity
         implements OnClickListener {
 
-    MediaPlayer mp =MediaPlayer.create(this, R.raw.ifudodo);
+    MediaPlayer mp =MediaPlayer.create(this, R.raw.closeyoureyes);
 
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
