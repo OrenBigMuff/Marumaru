@@ -28,7 +28,6 @@ public class Clear extends AppCompatActivity
     MediaPlayer mp;
     private PreferenceC pref;               //プリファレンス
 
-    Snackbar snackbar;              //スナックバー
     private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
@@ -49,6 +48,8 @@ public class Clear extends AppCompatActivity
     private Button btnInit;                 //Initボタン
 
     private CoordinatorLayout mCoodinatorLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +83,12 @@ public class Clear extends AppCompatActivity
         btnInit.setOnClickListener(this);
 
 
-        if(!pref.readConfig("soundON", true)){
+        if(pref.readConfig("soundON", false)){
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-            mp.pause();
+
+        }else if(pref.readConfig("soundON", true)){
+            mp.start();
         }
-        mp.start();
 
 
 
@@ -186,11 +188,26 @@ public class Clear extends AppCompatActivity
     @Override
     protected void onResume(){
         super.onResume();
-        if(!pref.readConfig("soundON", true)){
-            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-            mp.pause();
+        //BGM読込
+        try
+        {
+            mp = MediaPlayer.create(this, R.raw.closeyoureyes);
+            mp.setLooping(true);
+
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
         }
-        mp.start();
+        if(pref.readConfig("soundON", true)){
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+            mp.start();
+        }else if(pref.readConfig("soundON", false)){
+            mp.start();
+        }
     }
 
     @Override
@@ -198,9 +215,9 @@ public class Clear extends AppCompatActivity
         super.onPause();
         if (mp.isPlaying()) {
             mp.pause();
-            pref.writeConfig("soundON", false);
-        } else {
             pref.writeConfig("soundON", true);
+        } else if(!mp.isPlaying()) {
+            pref.writeConfig("soundON", false);
         }
     }
 
@@ -226,7 +243,7 @@ public class Clear extends AppCompatActivity
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                     pref.writeConfig("soundON", false);
-                } else {
+                } else if(!mp.isPlaying()) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
@@ -261,44 +278,4 @@ public class Clear extends AppCompatActivity
             this.mean = mean;
         }
     }
-
-/*    //DBからの読み込みメソッド
-    private String readDB() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        String str = c.getString(1);
-        c.close();
-        return str;
-    }
-
-    private int readZanmon() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        int num_zan = c.getCount();
-        c.close();
-        return num_zan;
-    }*/
-
-/*
-    *//**
-     * 仮初めのDBHelper
-     *//*
-    private class DBHelper extends SQLiteOpenHelper{
-        //コンストラクタ
-        public DBHelper(Context context){
-            super(context, DB_NAME, null, DB_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
-    }*/
 }

@@ -32,6 +32,7 @@
                 android:layout_marginStart="17dp"
                 android:text="@string/clear_title"
                 style="@style/fontSize_Big"
+                android:textColor="@color/P1StartButtonBackColor"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="26dp" android:layout_marginTop="10dp"
                 />
