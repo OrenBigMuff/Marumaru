@@ -43,6 +43,11 @@
         <item name="android:textSize">25sp</item>
     </style>
 
+    <style name="fontSize_Midium">       テキストサイズ小
+        <item name="android:textColor">@color/P1ScoreTextColor</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="fontSize_Small">       テキストサイズ小
         <item name="android:textColor">@color/P1ScoreTextColor</item>
         <item name="android:textSize">15sp</item>

@@ -10,7 +10,7 @@
         android:layout_height="64dp"
         android:layout_alignParentTop="true"
         android:id="@+id/L1"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="17dp"
         android:layout_marginLeft="5dp"
         android:layout_alignParentLeft="true">
 
@@ -20,7 +20,7 @@
             android:text="@string/commentary_title"
             android:id="@+id/textView"
             style="@style/title_activity"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical" android:textAlignment="center"/>
 
     </LinearLayout>
 
@@ -29,10 +29,11 @@
         android:layout_height="64dp"
         android:id="@+id/button"
         android:background="@drawable/marumaru_sound_on" android:alpha="0.8"
-        android:layout_marginTop="5dp" android:layout_marginRight="5dp"
+        android:layout_marginRight="5dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_alignParentEnd="false" android:layout_marginTop="17dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,8 +46,8 @@
         android:layout_above="@+id/L2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -74,7 +75,7 @@
             android:layout_gravity="center_horizontal"
             style="@style/button_start"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="25dp" />
 
     </LinearLayout>
 
