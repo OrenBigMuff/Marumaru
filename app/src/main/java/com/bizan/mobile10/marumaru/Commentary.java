@@ -40,7 +40,7 @@ public class Commentary extends AppCompatActivity {
                 if (magureCheck == 1) {
                     //スナックバーを表示させる
                     Snackbar.make(rtlCommentaryLayout,
-                            "マグレボタンを出題停止ボタンへ変更します",
+                            "マグレボタンを再出題ボタンへ変更します",
                             Snackbar.LENGTH_SHORT).show();
 
                     //出題フラグを｢出題する｣へ
@@ -51,7 +51,7 @@ public class Commentary extends AppCompatActivity {
                 } else if (magureCheck == 0) {
                     //スナックバーを表示させる
                     Snackbar.make(rtlCommentaryLayout,
-                            "出題停止ボタンをマグレボタンへ変更します",
+                            "再出題ボタンをマグレボタンへ変更します",
                             Snackbar.LENGTH_SHORT).show();
 
                     //出題フラグを｢出題しない｣へ
