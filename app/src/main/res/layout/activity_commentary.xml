@@ -65,7 +65,7 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/L2"
         android:layout_marginBottom="5dp"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
             android:layout_gravity="center_horizontal"
             style="@style/button_start"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp" />
+            android:gravity="center"/>
 
     </LinearLayout>
 
