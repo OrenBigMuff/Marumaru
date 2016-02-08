@@ -3,26 +3,20 @@ package com.bizan.mobile10.marumaru;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.ContentValues;
+
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.AudioManager;
-import android.media.SoundPool;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -386,6 +380,7 @@ public class QA extends AppCompatActivity implements View.OnClickListener, Anima
 
         animatorSet = new AnimatorSet();
         animatorSet.addListener(this);
+        animatorSet.setDuration(3000);
         animatorSet.play(scaledown);
     }
 
