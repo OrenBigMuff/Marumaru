@@ -59,7 +59,7 @@ public class Clear extends AppCompatActivity
 
         //コンフィグ使う準備
         pref = new PreferenceC(this);
-
+        pref.writeConfig("clear", false);
 
 //BGM読込
         try
@@ -206,7 +206,7 @@ public class Clear extends AppCompatActivity
 
     public void onDestroy() {
         super.onDestroy();
-        dbC.closeDB();
+        //dbC.closeDB();
         mp.release();
     }
 
@@ -219,6 +219,7 @@ public class Clear extends AppCompatActivity
             DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
             dbC.reset();
             mp.release();
+                pref.writeConfig("clear", true);
             Clear.this.finish();
                 break;
             case R.id.btnmavol_cl:
