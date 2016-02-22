@@ -205,7 +205,7 @@ public class Clear extends AppCompatActivity
 
     public void onDestroy() {
         super.onDestroy();
-        dbC.closeDB();
+//        dbC.closeDB();
         mp.release();
         Clear.this.finish();
     }
