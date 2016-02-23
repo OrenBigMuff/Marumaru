@@ -29,15 +29,15 @@ public class Clear extends AppCompatActivity
     private PreferenceC pref;               //プリファレンス
 
     Snackbar snackbar;              //スナックバー
-    private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
 
+    private int numZanmon;         //DBから取得した残問題数をセットします。（今井）
     TextView zanmonTitle;       //残問カードのタイトル 第〇問 From DB
     TextView zanmonWord;        //残問カードの問題 PLAYBOY From DB
-//    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
+    TextView zanmonMean;        //残問カードの解答 遊び人 From DB
 
+    //DB
     DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
-
-    //残問の配列（受け）
+    //残問の配列（DB受け）
     String zamWord[] = MainActivity.getQuestion();
     String zamMean[] = MainActivity.getCorrectAnswer();
 
@@ -57,9 +57,13 @@ public class Clear extends AppCompatActivity
 
         mCoodinatorLayout = (CoordinatorLayout)findViewById(R.id.cdL);
 
+        volButton = (Button) this.findViewById(R.id.btnmavol_cl);
+        volButton.setOnClickListener(this);
+        btnInit = (Button) this.findViewById(R.id.btnInit);
+        btnInit.setOnClickListener(this);
+
         //コンフィグ使う準備
         pref = new PreferenceC(this);
-        pref.writeConfig("clear", false);
 
 //BGM読込
         try
@@ -73,20 +77,14 @@ public class Clear extends AppCompatActivity
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         }
 
-        volButton = (Button) this.findViewById(R.id.btnmavol_cl);
-        volButton.setOnClickListener(this);
-        btnInit = (Button) this.findViewById(R.id.btnInit);
-        btnInit.setOnClickListener(this);
-
-
-        if(!pref.readConfig("soundON", true)){
+        if(pref.readConfig("soundON", true)){
+            mp.start();
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+        }else
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-            mp.pause();
-        }
-        mp.start();
+
 
 
 
@@ -144,14 +142,14 @@ public class Clear extends AppCompatActivity
                 CardView cardView2 = (CardView) linearLayout2.findViewById(R.id.cardView2);
                 zanmonTitle = (TextView) linearLayout2.findViewById(R.id.zanmonTitle);
                 zanmonWord = (TextView) linearLayout2.findViewById(R.id.zanmonWord);
-//                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
+                zanmonMean = (TextView) linearLayout2.findViewById(R.id.zanmonMean);
                 int j = i + 1;
                 zanmonTitle.setText("憶えていない単語 その" + j);
                 zanmonWord.setText(zanmon[i].question);
-//                zanmonMean.setText(zanmon[i].mean);
+                zanmonMean.setText(zanmon[i].mean);
 
                 //スナックバーアクションを割り当てたいときは以下を追加
-            cardView2.setTag(i);
+            /*cardView2.setTag(i);
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -171,7 +169,7 @@ public class Clear extends AppCompatActivity
                     })
                             .show();
                 }
-            });
+            });*/
 
                 cardLinearZanmon.addView(linearLayout2, i);     //i=0からにするために　i-1
             }
@@ -184,30 +182,32 @@ public class Clear extends AppCompatActivity
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(!pref.readConfig("soundON", true)){
-            volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-            mp.pause();
+        if (pref.readConfig("soundON", true)) {
+            volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
+            mp.start();
         }
-        mp.start();
     }
 
+
+
     @Override
-    protected void onPause() {
+    protected void onPause(){
         super.onPause();
-//        if (mp.isPlaying()) {
-//            mp.pause();
-//            pref.writeConfig("soundON", false);
-//        } else {
-//            pref.writeConfig("soundON", true);
-//        }
+        if (mp.isPlaying()) {
+            mp.pause();
+            pref.writeConfig("soundON", true);
+        } else {
+            pref.writeConfig("soundON", false);
+        }
     }
 
     public void onDestroy() {
         super.onDestroy();
-        //dbC.closeDB();
+//        dbC.closeDB();
         mp.release();
+        Clear.this.finish();
     }
 
     @Override
@@ -219,7 +219,6 @@ public class Clear extends AppCompatActivity
             DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
             dbC.reset();
             mp.release();
-                pref.writeConfig("clear", true);
             Clear.this.finish();
                 break;
             case R.id.btnmavol_cl:
@@ -227,10 +226,15 @@ public class Clear extends AppCompatActivity
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                     pref.writeConfig("soundON", false);
-                } else {
+
+                } else if(!mp.isPlaying() || pref.readConfig("soundOn",true)) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
+                } else if(!mp.isPlaying() || !pref.readConfig("soundOn",true)) {
+                    volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
+                    mp.pause();
+                    pref.writeConfig("soundON", false);
                 }
                 break;
         }
@@ -263,43 +267,5 @@ public class Clear extends AppCompatActivity
         }
     }
 
-/*    //DBからの読み込みメソッド
-    private String readDB() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        String str = c.getString(1);
-        c.close();
-        return str;
-    }
 
-    private int readZanmon() throws Exception{
-        Cursor c = db.query(DB_TABLE, new String[]{"question", "correct_answer", "question_flag"}, "question_flag='0'", null, null, null, null);
-        if(c.getCount() == 0)throw new Exception();
-        c.moveToFirst();
-        int num_zan = c.getCount();
-        c.close();
-        return num_zan;
-    }*/
-
-/*
-    *//**
-     * 仮初めのDBHelper
-     *//*
-    private class DBHelper extends SQLiteOpenHelper{
-        //コンストラクタ
-        public DBHelper(Context context){
-            super(context, DB_NAME, null, DB_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
-    }*/
 }
