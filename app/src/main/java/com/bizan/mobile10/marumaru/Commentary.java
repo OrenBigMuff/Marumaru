@@ -1,5 +1,6 @@
 package com.bizan.mobile10.marumaru;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class Commentary extends AppCompatActivity {
 
                     //ボタンのテキストを｢出題停止｣へ変更
                     btnMgure.setText(R.string.questionstop_button);
+                    btnMgure.setBackgroundResource(R.color.P5ConglacheColor);
+                    btnMgure.setTextColor(Color.parseColor("#ff8000"));
                 } else if (magureCheck == 0) {
                     //スナックバーを表示させる
                     Snackbar.make(rtlCommentaryLayout,
@@ -59,6 +62,8 @@ public class Commentary extends AppCompatActivity {
 
                     //ボタンのテキストを｢マグレ｣へ
                     btnMgure.setText(R.string.magure_button);
+                    btnMgure.setBackgroundResource(R.color.P1StartButtonBackColor);
+                    btnMgure.setTextColor(Color.WHITE);
                 }
             }
         });
@@ -75,19 +80,19 @@ public class Commentary extends AppCompatActivity {
                 }
             }
         });
-        pref = new PreferenceC(this);
+//        pref = new PreferenceC(this);
         final PreferenceC pref = new PreferenceC(this);
 //        音楽ファイル入れて名前書く.
-        sound = new Sound(this, R.raw.see);
+        sound = new Sound(this, R.raw.click1);
 
 
         final Button button = (Button) findViewById(R.id.button);
         if (sound.isSoundON()) {
             button.setBackgroundResource(R.drawable.marumaru_sound_on);
-            //iconChenge
+            //iconChange
         } else {
             button.setBackgroundResource(R.drawable.marumaru_sound_off);
-            //iconChenge
+            //iconChange
         }
         button.setOnClickListener(new View.OnClickListener() {
             //音を消す
@@ -96,11 +101,11 @@ public class Commentary extends AppCompatActivity {
                 if (sound.isSoundON()) {
                     sound.setSoundON(false);
                     button.setBackgroundResource(R.drawable.marumaru_sound_off);
-                    //iconChenge
+                    //iconChange
                 } else {
                     sound.setSoundON(true);
                     button.setBackgroundResource(R.drawable.marumaru_sound_on);
-                    //iconChenge
+                    //iconChange
                 }
                 pref.writeConfig("soundON", sound.isSoundON());
                 sound.playSE();

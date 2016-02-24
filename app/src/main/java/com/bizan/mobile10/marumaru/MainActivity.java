@@ -160,13 +160,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         long endTime = System.currentTimeMillis();
         Log.e("time", (endTime - startTime) + "");
+
+        pref.readConfig("clear", true);
     }
+
+
 
     @Override
     public void onResume() {
         super.onResume();
         //問題セット10問未満ならクリア画面を表示する
-        if (!qset()) {
+        if (!qset() && pref.readConfig("clear", true)) {
             Intent intent = new Intent(this, Clear.class);
             startActivity(intent);
         }
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float temp = 100 - ((countzanmon / (float) countallrow) * 100);
         txvmakuriado.setText(String.format("%.1f%%", temp));
 
-
+        btnF = true;
         Cursor cursor = dbC.readDB();
         int i = 0;
         while (cursor.moveToNext()) {
@@ -208,10 +212,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(btnF) {
             btnF = false;
             if (v == startButton && !btnF ) {
-                Intent intent = new Intent(this, QA.class);
-                startActivity(intent);
-            }
+                if(!pref.readConfig("clear", true) || !qset()){
+                    Intent intent = new Intent(this, Clear.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(this, QA.class);
+                    startActivity(intent);
+                }
 
+            }
         }
         if (v == volButton) {
             if (sound.isSoundON()) {

@@ -200,6 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgMaru1"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_correct" />
 
             </LinearLayout>
@@ -215,6 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imaMaru2"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_correct" />
             </LinearLayout>
         </LinearLayout>
@@ -235,6 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgBatu1"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_mistake" />
             </LinearLayout>
 
@@ -249,6 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgBatu2"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_mistake" />
             </LinearLayout>
         </LinearLayout>
@@ -339,6 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgMaru3"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_correct" />
             </LinearLayout>
 
@@ -353,6 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgMaru4"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_correct" />
             </LinearLayout>
         </LinearLayout>
@@ -373,6 +379,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgBatu3"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_mistake" />
             </LinearLayout>
 
@@ -387,6 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imgBatu4"
+                    android:alpha="0.7"
                     android:background="@drawable/marumaru_mistake" />
             </LinearLayout>
         </LinearLayout>

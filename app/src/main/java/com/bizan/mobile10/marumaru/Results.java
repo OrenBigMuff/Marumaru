@@ -1,6 +1,7 @@
 package com.bizan.mobile10.marumaru;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -95,6 +96,8 @@ public class Results extends AppCompatActivity {
 
                             //ボタンのテキストを｢出題停止｣へ変更
                             mBtnFluke.setText(R.string.questionstop_button);
+                            mBtnFluke.setBackgroundResource(R.color.P5ConglacheColor);
+                            mBtnFluke.setTextColor(Color.parseColor("#ff8000"));
                         }
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
                             //スナックバーを表示させる
@@ -107,6 +110,8 @@ public class Results extends AppCompatActivity {
 
                             //ボタンのテキストを｢マグレ｣へ
                             mBtnFluke.setText(R.string.magure_button);
+                            mBtnFluke.setBackgroundResource(R.color.P1StartButtonBackColor);
+                            mBtnFluke.setTextColor(Color.WHITE);
                         }
                     }
                 });

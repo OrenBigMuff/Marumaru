@@ -7,7 +7,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/P1StartButtonBackColor</item>
     </style>
 
     <!-- ボタンのスタイル -->
@@ -19,6 +19,7 @@
 
     <style name="button_answer">    アンサーボタン
         <item name="android:textColor">@color/AnswerButtonTextColor</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:background">@drawable/answer_button_back_color</item>
     </style>
 

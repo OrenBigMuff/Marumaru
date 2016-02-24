@@ -55,7 +55,7 @@ public class Clear extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
-        mCoodinatorLayout = (CoordinatorLayout)findViewById(R.id.cdL);
+        mCoodinatorLayout = (CoordinatorLayout) findViewById(R.id.cdL);
 
         volButton = (Button) this.findViewById(R.id.btnmavol_cl);
         volButton.setOnClickListener(this);
@@ -64,10 +64,11 @@ public class Clear extends AppCompatActivity
 
         //コンフィグ使う準備
         pref = new PreferenceC(this);
+        pref.writeConfig("clear", false);
+
 
 //BGM読込
-        try
-        {
+        try {
             mp = MediaPlayer.create(this, R.raw.closeyoureyes);
             mp.setLooping(true);
 
@@ -79,21 +80,18 @@ public class Clear extends AppCompatActivity
             e.printStackTrace();
         }
 
-        if(pref.readConfig("soundON", true)){
+        if (pref.readConfig("soundON", true)) {
             mp.start();
             volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
-        }else
+        } else
             volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
-
-
-
 
 
         //DBから残問数を取得するにはこちら
         numZanmon = dbC.countZanmon();
         //DBから残問数を取得する_ここまで
 
-        if(numZanmon == 0){
+        if (numZanmon == 0) {
 
             LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
             LinearLayout cardLinearZanmon = (LinearLayout) this.findViewById(R.id.cardLinearZanmon);
@@ -110,15 +108,14 @@ public class Clear extends AppCompatActivity
             //苦肉の策でカードビューの尻にボタンをくっつけてお茶を濁します、、、
 //            cardLinearZanmon.addView(makeButton("アプリ初期化ボタン", 1));
 
-        }else{
+        } else {
 
             final Zanmon zanmon[] = new Zanmon[numZanmon];
 
             //残問配列にDBの値を格納していく・・・tagいらんかったね(笑)
-            for(int i=0; i<numZanmon; i++){
+            for (int i = 0; i < numZanmon; i++) {
                 zanmon[i] = new Zanmon(i, zamWord[i], zamMean[i]);
             }
-
 
 
             LinearLayout cardLinear = (LinearLayout) this.findViewById(R.id.cardLinear);
@@ -191,9 +188,8 @@ public class Clear extends AppCompatActivity
     }
 
 
-
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         if (mp.isPlaying()) {
             mp.pause();
@@ -212,14 +208,13 @@ public class Clear extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btnInit:
-            //ここにイニシャライズの呪文(メソッド)を書き込む
-            Log.v("Button_clr", "onClick");
-            DatabaseC dbC = new DatabaseC(MainActivity.getDbHelper(), MainActivity.getDB_TABLE());
-            dbC.reset();
-            mp.release();
-            Clear.this.finish();
+                //ここにイニシャライズの呪文(メソッド)を書き込む
+                dbC.reset();
+                mp.release();
+                pref.writeConfig("clear", true);
+                Clear.this.finish();
                 break;
             case R.id.btnmavol_cl:
                 if (mp.isPlaying()) {
@@ -227,11 +222,11 @@ public class Clear extends AppCompatActivity
                     mp.pause();
                     pref.writeConfig("soundON", false);
 
-                } else if(!mp.isPlaying() || pref.readConfig("soundOn",true)) {
+                } else if (!mp.isPlaying() || pref.readConfig("soundOn", true)) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_on);
                     mp.start();
                     pref.writeConfig("soundON", true);
-                } else if(!mp.isPlaying() || !pref.readConfig("soundOn",true)) {
+                } else if (!mp.isPlaying() || !pref.readConfig("soundOn", true)) {
                     volButton.setBackgroundResource(R.drawable.marumaru_sound_off);
                     mp.pause();
                     pref.writeConfig("soundON", false);
@@ -242,6 +237,7 @@ public class Clear extends AppCompatActivity
 
     /**
      * 苦肉の策でボタンを動的に追加する為のメソッドです とりあえずボタンの height = 150dp でご機嫌をうかがってます
+     *
      * @param text
      * @param id
      * @return
@@ -255,12 +251,12 @@ public class Clear extends AppCompatActivity
         return button;
     }
 
-    private class Zanmon{
+    private class Zanmon {
         int tag;
         String question;
         String mean;
 
-        Zanmon(int tag, String question, String mean){
+        Zanmon(int tag, String question, String mean) {
             this.tag = tag;
             this.question = question;
             this.mean = mean;
