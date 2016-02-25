@@ -203,7 +203,7 @@ public class Clear extends AppCompatActivity
         super.onDestroy();
 //        dbC.closeDB();
         mp.release();
-        Clear.this.finish();
+//        Clear.this.finish();
     }
 
     @Override
@@ -212,7 +212,7 @@ public class Clear extends AppCompatActivity
             case R.id.btnInit:
                 //ここにイニシャライズの呪文(メソッド)を書き込む
                 dbC.reset();
-                mp.release();
+//                mp.release();
                 pref.writeConfig("clear", true);
                 Clear.this.finish();
                 break;
