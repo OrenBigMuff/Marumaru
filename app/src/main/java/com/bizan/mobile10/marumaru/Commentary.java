@@ -49,7 +49,7 @@ public class Commentary extends AppCompatActivity {
 
                     //ボタンのテキストを｢出題停止｣へ変更
                     btnMgure.setText(R.string.questionstop_button);
-                    btnMgure.setBackgroundResource(R.color.P5ConglacheColor);
+                    btnMgure.setBackgroundResource(R.drawable.re_question_button);
                     btnMgure.setTextColor(Color.parseColor("#ff8000"));
                 } else if (magureCheck == 0) {
                     //スナックバーを表示させる
@@ -62,7 +62,7 @@ public class Commentary extends AppCompatActivity {
 
                     //ボタンのテキストを｢マグレ｣へ
                     btnMgure.setText(R.string.magure_button);
-                    btnMgure.setBackgroundResource(R.color.P1StartButtonBackColor);
+                    btnMgure.setBackgroundResource(R.drawable.start_button_back_color);
                     btnMgure.setTextColor(Color.WHITE);
                 }
             }

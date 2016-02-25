@@ -15,6 +15,12 @@
         <item name="android:textSize">25sp</item>
     </style>
 
+    <style name="button_re_question">     再出題ボタン
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:background">@drawable/start_button_back_color</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
     <style name="button_answer">    アンサーボタン
         <item name="android:textColor">@color/AnswerButtonTextColor</item>
         <item name="android:textSize">20sp</item>

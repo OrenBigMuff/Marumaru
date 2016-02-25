@@ -96,7 +96,7 @@ public class Results extends AppCompatActivity {
 
                             //ボタンのテキストを｢出題停止｣へ変更
                             mBtnFluke.setText(R.string.questionstop_button);
-                            mBtnFluke.setBackgroundResource(R.color.P5ConglacheColor);
+                            mBtnFluke.setBackgroundResource(R.drawable.re_question_button);
                             mBtnFluke.setTextColor(Color.parseColor("#ff8000"));
                         }
                         else if (mCorrection[Integer.parseInt(String.valueOf(v.getTag()))]==0) {
@@ -110,7 +110,7 @@ public class Results extends AppCompatActivity {
 
                             //ボタンのテキストを｢マグレ｣へ
                             mBtnFluke.setText(R.string.magure_button);
-                            mBtnFluke.setBackgroundResource(R.color.P1StartButtonBackColor);
+                            mBtnFluke.setBackgroundResource(R.drawable.start_button_back_color);
                             mBtnFluke.setTextColor(Color.WHITE);
                         }
                     }

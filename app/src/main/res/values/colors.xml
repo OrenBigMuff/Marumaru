@@ -13,6 +13,7 @@
     <color name="P2AnswerButtonBackColor">#fef263</color>       アンサーボタンバックグラウンドカラー
     <color name="P2AnswerButtonStrokeColor">#ff0000</color>     アンサーボタン外枠カラー
     <color name="P5ConglacheColor">#7ecef4</color>              コングラッチェカラー
+    <color name="P5ConglachePressedColor">#6ac7f2</color>
 
     <!-- テキスト -->
     <color name="TextColor">#ff8000</color>
