@@ -75,7 +75,7 @@
     </style>
 
     <style name="Linearr">          灰色バックグラウンド
-        <item name="android:background">@drawable/linearr</item>
+        <item name="android:background">@drawable/linearr2</item>
     </style>
 
     <!-- CardViewのスタイル -->
